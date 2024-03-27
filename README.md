@@ -6,7 +6,8 @@
 4. **Learn and apply Flutter's responsive design patterns**: Use efficient methods to create a responsive UI in Flutter.
 5. **Speed Up Coding**: Aim to increase coding speed and efficiency.
 ## 🎨 system design 
-![image](https://github.com/SouFiane-SinCara/e-commerce-school-project/assets/131272665/3f47b4fe-5a5b-4b66-937c-76b3835bb87f)
+![image](https://github.com/SouFiane-SinCara/e-commerce-school-project/assets/131272665/c3712492-501f-4d5d-831f-b7ff2c2ad498)
+
 ## ℹ️About the App
 
 This is an e-commerce application developed as a school project. The app is built using Flutter and follows clean architecture principles. It's designed to provide a seamless shopping experience for users.
