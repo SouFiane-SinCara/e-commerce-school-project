@@ -1,5 +1,5 @@
-import 'package:e_commerece_school_project/core/helper/text_styles.dart';
-import 'package:e_commerece_school_project/features/authentication/logic/text_field_controllers_cubit/text_field_controllers_cubit.dart';
+import 'package:e_commerce_school_project/core/helper/text_styles.dart';
+import 'package:e_commerce_school_project/features/authentication/logic/text_field_controllers_cubit/text_field_controllers_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,14 +31,14 @@ class MyTextField extends StatefulWidget {
 
 class _MyTextFieldState extends State<MyTextField> {
   bool hideContent = true;
-  int sizeOfchars = 0;
+  int charactersLength = 0;
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
 
     return TextField(
       onChanged: (value) {
-        sizeOfchars = value.length;
+        charactersLength = value.length;
         setState(() {});
 
         widget.controller.text = value;
@@ -70,14 +70,14 @@ class _MyTextFieldState extends State<MyTextField> {
             color: theme.colorScheme.secondary,
           ),
         ),
-        prefixIconColor: sizeOfchars != 0
+        prefixIconColor: charactersLength != 0
             ? theme.brightness == Brightness.dark
                 ? const Color(0XFFffffff)
                 : const Color(0XFF212121)
             : theme.brightness == Brightness.dark
                 ? const Color(0XFF9e9e9e)
                 : const Color(0XFF9e9e9e),
-        suffixIconColor: sizeOfchars != 0
+        suffixIconColor: charactersLength != 0
             ? theme.brightness == Brightness.dark
                 ? const Color(0XFFffffff)
                 : const Color(0XFF212121)

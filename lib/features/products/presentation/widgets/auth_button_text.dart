@@ -1,6 +1,6 @@
-import 'package:e_commerece_school_project/core/helper/extension.dart';
-import 'package:e_commerece_school_project/core/helper/text_styles.dart';
-import 'package:e_commerece_school_project/features/authentication/logic/text_field_controllers_cubit/text_field_controllers_cubit.dart';
+import 'package:e_commerce_school_project/core/helper/extension.dart';
+import 'package:e_commerce_school_project/core/helper/text_styles.dart';
+import 'package:e_commerce_school_project/features/authentication/logic/text_field_controllers_cubit/text_field_controllers_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

@@ -1,7 +1,7 @@
-import 'package:e_commerece_school_project/core/helper/extension.dart';
-import 'package:e_commerece_school_project/core/helper/my_sizedbox.dart';
-import 'package:e_commerece_school_project/core/helper/text_styles.dart';
+import '../../../../core/helper/extension.dart';
+import 'package:e_commerce_school_project/core/helper/text_styles.dart';
 import 'package:flutter/material.dart';
+import '../../../../core/helper/my_sizedbox.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AuthWithGoogleButton extends StatelessWidget {
