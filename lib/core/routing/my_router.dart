@@ -1,9 +1,9 @@
 import 'package:e_commerce_school_project/core/helper/extension.dart';
 import 'package:e_commerce_school_project/core/helper/text_styles.dart';
 import 'package:e_commerce_school_project/core/routing/routes_name.dart';
-import 'package:e_commerce_school_project/features/products/presentation/screens/initial_page.dart';
-import 'package:e_commerce_school_project/features/products/presentation/screens/login_page.dart';
-import 'package:e_commerce_school_project/features/products/presentation/screens/signup_page.dart';
+import 'package:e_commerce_school_project/features/authentication/presentation/screens/initial_page.dart';
+import 'package:e_commerce_school_project/features/authentication/presentation/screens/login_page.dart';
+import 'package:e_commerce_school_project/features/authentication/presentation/screens/signup_page.dart';
 import 'package:flutter/material.dart';
 
 class MyRouter {

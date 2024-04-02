@@ -19,7 +19,7 @@ class TextStyles {
             color: theme.colorScheme.secondary,
             fontWeight: FontWeight.w600);
   }
-  
+
   static TextStyle blackW600WithShadow(BuildContext context) {
     ThemeData theme = Theme.of(context);
 

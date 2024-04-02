@@ -1,9 +1,9 @@
 import 'package:e_commerce_school_project/core/helper/extension.dart';
 import 'package:e_commerce_school_project/core/helper/my_sizedbox.dart';
 import 'package:e_commerce_school_project/core/helper/text_styles.dart';
-import 'package:e_commerce_school_project/features/products/presentation/widgets/auth_button_text.dart';
+import 'package:e_commerce_school_project/features/authentication/presentation/widgets/auth_button_text.dart';
 import 'package:e_commerce_school_project/core/widgets/my_text_field.dart';
-import 'package:e_commerce_school_project/features/products/presentation/widgets/auth_google_button.dart';
+import 'package:e_commerce_school_project/features/authentication/presentation/widgets/auth_google_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
