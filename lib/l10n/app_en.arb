@@ -1,0 +1,19 @@
+{
+    "language":"English",
+    "@language":{
+        "description": "The current Language"
+    },
+    "loginToYour":"Login to your",
+    "account":"Account",
+    "pagenotfound":"Page not found",
+    "forgotthepassowrd":"Forgot the password",
+    "signinwithgoogle":"Sign in with Google",
+    "orcontinuewith":"or continue with",
+    "donthaveanaccount":"Don't have an account ",
+    "signup":"SignUp",
+    "email":"Email",
+    "password":"Password",
+    "login":"Login"
+    
+
+}
