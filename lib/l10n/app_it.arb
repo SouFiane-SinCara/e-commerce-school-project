@@ -10,5 +10,8 @@
     "signup":"Registrati",
     "email":"Email",
     "password":"Password",
-    "login":"Accedi"
+    "login":"Accedi",
+    "fullname":"Nome e Cognome",
+    "createYour":"Crea il tuo",
+    "alreadyHaveAnAccount":"Hai già un account"
 }

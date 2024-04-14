@@ -7,7 +7,7 @@ class LightTheme {
     colorScheme:  ColorScheme(
         brightness: Brightness.light,
         secondaryContainer: Colors.grey.withOpacity(0.2),
-        primaryContainer: Color(0xFFfafafa),
+        primaryContainer: const Color(0xFFfafafa),
         primary: const Color(0xFFffffff),
         onPrimary: const Color.fromARGB(199, 251, 251, 251),
         secondary: const Color(0xFF101010),

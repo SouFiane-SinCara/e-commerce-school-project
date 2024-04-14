@@ -31,6 +31,7 @@ class AuthWithGoogleButton extends StatelessWidget {
           Container(
             height: 25.h,
             width: 25.w,
+            padding: EdgeInsets.symmetric(vertical: 3.h),
             alignment: Alignment.center,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
@@ -42,6 +43,7 @@ class AuthWithGoogleButton extends StatelessWidget {
             0.03,
           ),
           Container(
+            padding: EdgeInsets.symmetric(vertical: 3.h),
             height: 25.h,
             width: 120.w,
             decoration: BoxDecoration(
@@ -52,7 +54,7 @@ class AuthWithGoogleButton extends StatelessWidget {
             child: FittedBox(
               child: Text(
                 context.lang().signinwithgoogle,
-                style: TextStyles.blackW900(context).copyWith(fontSize: 55.sp),
+                style: TextStyles.blackW600(context).copyWith(fontSize: 15.sp),
               ),
             ),
           )

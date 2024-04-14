@@ -1,10 +1,14 @@
 import 'package:e_commerce_school_project/core/helper/extension.dart';
 import 'package:e_commerce_school_project/core/helper/my_sizedbox.dart';
 import 'package:e_commerce_school_project/core/helper/text_styles.dart';
+import 'package:e_commerce_school_project/core/routing/routes_name.dart';
+import 'package:e_commerce_school_project/core/widgets/multi_language_changer.dart';
 import 'package:e_commerce_school_project/features/authentication/presentation/widgets/auth_button_text.dart';
 import 'package:e_commerce_school_project/core/widgets/my_text_field.dart';
 import 'package:e_commerce_school_project/features/authentication/presentation/widgets/auth_google_button.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -29,7 +33,7 @@ class LoginPage extends StatelessWidget {
           child: SingleChildScrollView(
             child: Stack(
               children: [
-                Container(
+                SizedBox(
                   height: 690.h,
                   width: double.infinity,
                   child: Column(
@@ -40,7 +44,7 @@ class LoginPage extends StatelessWidget {
                         height: 200.h,
                         decoration: BoxDecoration(boxShadow: [
                           BoxShadow(
-                            offset: Offset(0, 0),
+                            offset: const Offset(0, 0),
                             color: theme.colorScheme.secondaryContainer,
                             spreadRadius: 10.h,
                             blurRadius: 300,
@@ -55,6 +59,13 @@ class LoginPage extends StatelessWidget {
                     horizontal: 20.w,
                   ),
                   child: Column(children: [
+                    heightSize(
+                      20.h,
+                    ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [MultiLanguageChanger()],
+                    ),
                     heightSize(120),
                     Container(
                       width: double.infinity,
@@ -69,32 +80,20 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     heightSize(40),
-                    MyTextField(
-                        keyword: "loginEmail",
-                        icon: const Icon(Icons.mail_rounded),
-                        controller: emailController,
-                        title: lang.email),
-                    heightSize(20),
-                    MyTextField(
-                        keyword: "loginPassword",
-                        icon: const Icon(Icons.lock_rounded),
-                        controller: passwordController,
-                        enableSuffixIcon: true,
-                        suffixIcon: const Icon(Icons.visibility_rounded),
-                        obscureText: true,
-                        secondSuffixIcon:
-                            const Icon(Icons.visibility_off_rounded),
-                        title: lang.password),
-                    heightSize(40),
-                    const AuthButtonText(),
+                    FieldAndButtonLogin(
+                        emailController: emailController,
+                        lang: lang,
+                        passwordController: passwordController,
+                        theme: theme),
                     heightSize(20),
                     Container(
                       width: double.infinity,
                       height: 20.h,
                       margin: EdgeInsets.symmetric(horizontal: 80.w),
+                      //TODO: forgot password
                       child: FittedBox(
                         child: Text(
-                          lang.forgotthepassowrd + ' ?',
+                          '${lang.forgotthepassowrd} ?',
                           style: TextStyles.blackW600WithShadow(context),
                         ),
                       ),
@@ -141,11 +140,15 @@ class LoginPage extends StatelessWidget {
                           child: RichText(
                         text: TextSpan(children: [
                           TextSpan(
-                              text: lang.donthaveanaccount + '? ',
+                              text: '${lang.donthaveanaccount}? ',
                               style: TextStyles.greyW500(context)
                                   .copyWith(fontSize: 4.sp)),
                           TextSpan(
                               text: lang.signup,
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  context.navigate(RoutesNames.signUpPageName);
+                                },
                               style: TextStyles.blackW900WithShadow(context)
                                   .copyWith(fontSize: 4.sp)),
                         ]),
@@ -158,6 +161,76 @@ class LoginPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class FieldAndButtonLogin extends StatefulWidget {
+  const FieldAndButtonLogin({
+    super.key,
+    required this.emailController,
+    required this.lang,
+    required this.passwordController,
+    required this.theme,
+  });
+
+  final TextEditingController emailController;
+  final AppLocalizations? lang;
+  final TextEditingController passwordController;
+  final ThemeData theme;
+
+  @override
+  State<FieldAndButtonLogin> createState() => _FieldAndButtonLoginState();
+}
+
+class _FieldAndButtonLoginState extends State<FieldAndButtonLogin> {
+  @override
+  Widget build(BuildContext context) {
+    final lang = context.lang();
+    return Column(
+      children: [
+        MyTextField(
+            onChanged: (value) {
+              widget.emailController.text = value;
+
+              setState(() {});
+            },
+            textInputAction: TextInputAction.next,
+            icon: const Icon(Icons.mail_rounded),
+            controller: widget.emailController,
+            title: lang.email),
+        heightSize(20),
+        MyTextField(
+            onChanged: (value) {
+              widget.passwordController.text = value;
+              setState(() {});
+            },
+            textInputAction: TextInputAction.done,
+            icon: const Icon(Icons.lock_rounded),
+            controller: widget.passwordController,
+            enableSuffixIcon: true,
+            suffixIcon: const Icon(Icons.visibility_rounded),
+            obscureText: true,
+            secondSuffixIcon: const Icon(Icons.visibility_off_rounded),
+            title: lang.password),
+        heightSize(40),
+        AuthButtonText(
+          text: Text(
+            context.lang().login,
+            style: widget.emailController.text.trim().isNotEmpty &&
+                    widget.passwordController.text.trim().isNotEmpty
+                ? TextStyles.whiteW500(context).copyWith(
+                    fontSize: 15.sp,
+                  )
+                : TextStyles.whiteW500(context)
+                    .copyWith(fontSize: 15.sp, color: Colors.white),
+          ),
+          color: widget.emailController.text.trim().isNotEmpty &&
+                  widget.passwordController.text.trim().isNotEmpty
+              ? widget.theme.colorScheme.secondary
+              : widget.theme.colorScheme.onSecondary,
+        ),
+      ],
     );
   }
 }

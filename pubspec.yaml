@@ -14,10 +14,13 @@ dependencies:
     
   #state management
   flutter_bloc: ^8.1.5
-  #adapting screen and font size.  
+  #to use multi languages    
   flutter_localizations:
     sdk: flutter
+  #to make the app responsive for different devices
   flutter_screenutil: ^5.9.0
+  #to use svg images
+  flutter_svg: ^2.0.10+1
   
 
 dev_dependencies:
@@ -33,5 +36,13 @@ flutter:
   
   assets:
     - lib/core/assets/images/
+    - lib/core/assets/icons/
+
+  fonts:
+    - family: Coco-Sharp
+      fonts:
+        - asset:  lib/core/assets/fonts/Coco-Sharp-Regular-trial.ttf
+
+
 
 

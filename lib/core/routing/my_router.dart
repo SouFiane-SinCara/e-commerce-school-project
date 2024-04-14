@@ -19,7 +19,7 @@ class MyRouter {
         );
       case RoutesNames.signUpPageName:
         return MaterialPageRoute(
-          builder: (context) => SignupPage(),
+          builder: (context) => const SignUpPage(),
         );
 
       default:

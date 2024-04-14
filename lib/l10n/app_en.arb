@@ -10,10 +10,15 @@
     "signinwithgoogle":"Sign in with Google",
     "orcontinuewith":"or continue with",
     "donthaveanaccount":"Don't have an account ",
-    "signup":"SignUp",
+    "signup":"Sign Up",
     "email":"Email",
     "password":"Password",
-    "login":"Login"
+    "login":"Login",
+    "fullname":"Full name",
+    "createYour":"Create your",
+    "alreadyHaveAnAccount":"Already have an account"
+    
+
     
 
 }
