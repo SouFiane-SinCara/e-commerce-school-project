@@ -4,7 +4,7 @@ class DarkTheme {
   ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     colorScheme: const ColorScheme(
-        secondaryContainer: Colors.black26,
+        secondaryContainer: Color.fromARGB(0, 0, 0, 0),
         primaryContainer: Color(0xFF1f222a),
         brightness: Brightness.dark,
         primary: Color(0xFF181a20),
@@ -17,7 +17,7 @@ class DarkTheme {
         onBackground: Color(0xFF201c24),
         surface: Color(0xFF201c24),
         onSurface: Color(0xFF201c24)),
-    shadowColor: Colors.white10,
+    shadowColor: const Color.fromARGB(10, 255, 255, 255),
     scaffoldBackgroundColor: const Color(0xFF181a20),
     inputDecorationTheme: const InputDecorationTheme(
       hintStyle:

@@ -7,6 +7,9 @@ extension MyExtensions on BuildContext{
   navigate(String routeName){
     Navigator.pushNamed(this, routeName);
   }
+  navigateReplace(String routeName){
+    Navigator.pushReplacementNamed(this, routeName);
+  }
   AppLocalizations lang(){
     return AppLocalizations.of(this)!;
   } 

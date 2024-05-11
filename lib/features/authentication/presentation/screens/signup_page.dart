@@ -1,278 +1,338 @@
+import 'package:e_commerce_school_project/core/errors/failures.dart';
+import 'package:e_commerce_school_project/core/helper/extension.dart';
 import 'package:e_commerce_school_project/core/helper/my_sizedbox.dart';
+import 'package:e_commerce_school_project/core/helper/text_styles.dart';
+import 'package:e_commerce_school_project/core/routing/routes_name.dart';
+import 'package:e_commerce_school_project/core/widgets/loading.dart';
+import 'package:e_commerce_school_project/features/authentication/presentation/logic/Auth_controllers_cubit/Auth_controllers_cubit.dart';
+import 'package:e_commerce_school_project/features/authentication/presentation/logic/Auth_cubit/Auth_cubit.dart';
+import 'package:e_commerce_school_project/features/multi_language/presentation/widgets/multi_language_changer.dart';
+import 'package:e_commerce_school_project/features/authentication/presentation/widgets/auth_button_text.dart';
 import 'package:e_commerce_school_project/core/widgets/my_text_field.dart';
+import 'package:e_commerce_school_project/features/authentication/presentation/widgets/auth_google_button.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class SignupPage extends StatefulWidget {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController fullNameController = TextEditingController();
-  SignupPage({super.key});
+class SignUpPage extends StatefulWidget {
+  SignUpPage({super.key});
 
   @override
-  State<SignupPage> createState() => _SignupPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignupPageState extends State<SignupPage> {
-  @override
-  void initState() {
-    super.initState();
-    widget.emailController.addListener(_updateState);
-    widget.passwordController.addListener(_updateState);
-    widget.fullNameController.addListener(_updateState);
-  }
+class _SignUpPageState extends State<SignUpPage> {
+  final TextEditingController emailController = TextEditingController();
 
-  @override
-  void dispose() {
-    widget.emailController.removeListener(_updateState);
-    widget.passwordController.removeListener(_updateState);
-    widget.fullNameController.removeListener(_updateState);
-    super.dispose();
-  }
+  final TextEditingController passwordController = TextEditingController();
 
-  void _updateState() {
-    setState(() {});
-  }
+  final TextEditingController fullNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-    Size size = MediaQuery.of(context).size;
-    widget.emailController.addListener(_updateState);
-    widget.passwordController.addListener(_updateState);
-    widget.fullNameController.addListener(_updateState);
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: theme.scaffoldBackgroundColor,
-          leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Icon(
-                Icons.arrow_back_ios_new_rounded,
-                color: theme.colorScheme.secondary,
-              )),
-        ),
-        backgroundColor: theme.scaffoldBackgroundColor,
-        body: SingleChildScrollView(
-          physics: const ScrollPhysics(parent: NeverScrollableScrollPhysics()),
-          child: SizedBox(
-            width: size.width,
-            height: size.height,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: size.width * 0.7,
-                  height: size.height * 0.15,
-                  margin: EdgeInsets.only(left: size.width * 0.05),
-                  alignment: Alignment.centerLeft,
-                  child: FittedBox(
-                      child: Text(
-                    "Create your \nAccount",
-                    textAlign: TextAlign.left,
-                    style:
-                        theme.textTheme.displayLarge!.copyWith(fontSize: 15.sp),
-                  )),
-                ),
-                heightSize(
-                  0.06,
-                ),
-                MyTextField(
-                    keyword: 'signupUser',
-                    controller: widget.fullNameController,
-                    icon: const Icon(
-                      Icons.person_rounded,
-                    ),
-                    title: "Full Name"),
-                heightSize(
-                  0.03,
-                ),
-                //TODO: add multi languages ,
-                MyTextField(
-                    keyword: "signupEmail",
-                    controller: widget.emailController,
-                    icon: const Icon(
-                      Icons.mail_rounded,
-                    ),
-                    title: "Email"),
-                heightSize(
-                  0.03,
-                ),
-                MyTextField(
-                    keyword: "signupPassword",
-                    controller: widget.passwordController,
-                    obscureText: true,
-                    suffixIcon: const Icon(Icons.visibility_off_rounded),
-                    secondSuffixIcon: const Icon(Icons.visibility_rounded),
-                    enableSuffixIcon: true,
-                    icon: const Icon(
-                      Icons.lock_rounded,
-                    ),
-                    title: "Password"),
-                heightSize(
-                  0.04,
-                ),
-                InkWell(
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onTap: () {
-                    debugPrint("hello");
-                    debugPrint(widget.emailController.text);
-                    debugPrint(widget.passwordController.text);
-                  },
-                  child: Container(
-                    width: size.width,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.horizontal(
-                            left: Radius.circular(size.height),
-                            right: Radius.circular(size.height)),
-                        color: widget.emailController.text.trim().isEmpty ||
-                                widget.fullNameController.text.trim().isEmpty ||
-                                widget.passwordController.text.trim().isEmpty
-                            ? const Color(0xFF393939)
-                            : theme.colorScheme.secondary),
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-                    height: size.height * 0.07,
-                    child: FittedBox(
-                      child: Text("Sign up",
-                          style: theme.textTheme.bodyMedium!.copyWith(
-                            color: widget.emailController.text.trim().isEmpty ||
-                                    widget.passwordController.text
-                                        .trim()
-                                        .isEmpty
-                                ? Colors.white
-                                : theme.colorScheme.primary,
-                          )),
-                    ),
-                  ),
-                ),
-                heightSize(
-                  0.03,
-                ),
-                Container(
-                  width: size.width,
-                  height: size.height * 0.03,
-                  margin: EdgeInsets.symmetric(horizontal: size.width * 0.15),
-                  alignment: Alignment.center,
-                  child: FittedBox(
-                      child: Text(
-                    "Forgot the password?",
-                    style: theme.textTheme.bodyMedium,
-                  )),
-                ),
-                heightSize(
-                  0.06,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 0.8,
-                      color: theme.colorScheme.secondary.withOpacity(0.5),
-                      margin: EdgeInsets.only(left: size.width * 0.1),
-                      width: size.width * 0.2,
-                    ),
-                    Container(
-                      width: size.width * 0.35,
-                      height: size.height * 0.03,
-                      alignment: Alignment.center,
-                      child: FittedBox(
-                          child: Text(
-                        "or continue with",
-                        style: theme.textTheme.bodyMedium!.copyWith(
-                            color: theme.textTheme.bodyMedium!.color!
-                                .withOpacity(0.7)),
-                      )),
-                    ),
-                    Container(
-                      height: 0.8,
-                      margin: EdgeInsets.only(right: size.width * 0.1),
-                      width: size.width * 0.2,
-                      color: theme.colorScheme.secondary.withOpacity(0.5),
-                    ),
-                  ],
-                ),
-                heightSize(
-                  0.04,
-                ),
-                Container(
-                  width: size.width,
-                  height: size.height * 0.06,
-                  margin: EdgeInsets.symmetric(horizontal: size.width * 0.2),
-                  decoration: BoxDecoration(
-                      color: theme.colorScheme.primary,
-                      border: Border.all(
-                          width: 2, color: theme.colorScheme.secondary),
-                      borderRadius: BorderRadius.horizontal(
-                          left: Radius.circular(size.height),
-                          right: Radius.circular(size.height))),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: size.width * 0.15,
-                        height: size.height * 0.04,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(size.height),
-                                topLeft: Radius.circular(size.height))),
-                        child: Image.asset(
-                            "lib/core/assets/images/google_logo.webp"),
-                      ),
-                      widthSize(0.01,),
-                      Container(
-                        width: size.width * 0.4,
-                        height: size.height * 0.04,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(size.height),
-                              bottomRight: Radius.circular(size.height)),
+    AppLocalizations? lang = AppLocalizations.of(context);
+    ThemeData theme = context.themes();
+    String failureToMessage(Failures failure) {
+      AppLocalizations? lang = context.lang();
+      switch (failure.runtimeType) {
+        case const (ServerLoginFailure):
+          return lang.serverLoginFailure;
+        case const (EmailBadFormatLoginFailure):
+          return lang.emailBadFormatFailure;
+        case const (WrongPasswordOrEmailFailure):
+          return lang.wrongPasswordOrEmailFailure;
+        case const (WeakPasswordLoginFailure):
+          return lang.weakPasswordFailure;
+        case const (ServerSignUpFailure):
+          return lang.serverSignUpFailure;
+        case const (EmailAlreadyUsedFailure):
+          return lang.emailAlreadyUsedFailure;
+        case const (WeakPasswordSignUpFailure):
+          return lang.weakPasswordFailure;
+        case const (NonInternetConnectionFailure):
+          return lang.nonInternetConnectionFailure;
+        case const (EmailBadFormatSignUpFailure):
+          return lang.emailBadFormatFailure;
+        case const (EmailBadFormatForgotPasswordFailure):
+          return lang.emailBadFormatFailure;
+        case const (NotRegisterFailure):
+          return lang.accountNotRegistered;
+        case const (ServerForgotPasswordFailure):
+          return lang.serverForgotPasswordFailure;
+        default:
+          return lang.serverForgotPasswordFailure;
+      }
+    }
+
+    BlocProvider.of<AuthControllersCubit>(context).updateSignUp(
+      email: "",
+      fullName: "",
+      password: "",
+    );
+
+    return BlocConsumer<AuthCubit, AuthState>(
+      listener: (context, state) {
+        print("init login");
+        if (state is SignUpSuccessState) {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            RoutesNames.productsPageName,
+            (Route<dynamic> route) => false,
+          );
+        }
+      },
+      builder: (context, state) => state is AuthLoadingState
+          ? const Loading()
+          : SafeArea(
+              child: Scaffold(
+                backgroundColor: theme.scaffoldBackgroundColor,
+                body: Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  color: theme.scaffoldBackgroundColor,
+                  child: SingleChildScrollView(
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          top: 10.h,
+                          left: 5.w,
+                          child: IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: Icon(
+                                Icons.arrow_back_ios_new,
+                                color: theme.colorScheme.secondary,
+                              )),
                         ),
-                        child: FittedBox(
-                          child: Text(
-                            "Sign in with Google",
-                            style: theme.textTheme.bodyMedium,
+                        SizedBox(
+                          height: 690.h,
+                          width: double.infinity,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: double.infinity,
+                                height: 200.h,
+                                decoration: BoxDecoration(boxShadow: [
+                                  BoxShadow(
+                                    offset: const Offset(0, 0),
+                                    color: theme.colorScheme.secondaryContainer,
+                                    spreadRadius: 10.h,
+                                    blurRadius: 300,
+                                  )
+                                ]),
+                              ),
+                            ],
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                ),
-                heightSize(0.03),
-                Container(
-                  width: size.width,
-                  height: size.height * 0.02,
-                  margin: EdgeInsets.symmetric(horizontal: size.width * 0.2),
-                  child: FittedBox(
-                    child: Row(
-                      children: [
-                        Text("Already have an account ?  ",
-                            style: TextStyle(
-                                color: theme.colorScheme.secondary,
-                                fontWeight: FontWeight.w100,
-                                fontFamily: 'Cabin')),
-                        InkWell(
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text("Sign in",
-                              style: theme.textTheme.bodyMedium!
-                                  .copyWith(fontWeight: FontWeight.w900)),
+                        Container(
+                             padding: EdgeInsets.symmetric(
+                            horizontal: 20.w,
+                          ),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                heightSize(15),
+                                const Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [MultiLanguageChanger()],
+                                ),
+                                heightSize(50),
+                                Container(
+                                  width: double.infinity,
+                                  height: 80.h,
+                                  alignment: Alignment.centerLeft,
+                                  child: FittedBox(
+                                   child: Text(
+                                      '${lang!.createYour}\n${lang.account}',
+                                      style: TextStyles.blackW900(context)
+                                          .copyWith(fontSize: 35.sp),
+                                    ),
+                                  ),
+                                ),
+                                heightSize(40),
+
+                                state is SignUpErrorState
+                                    ? Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          failureToMessage(state.failure),
+                                          style: TextStyles.redW600(context)
+                                              .copyWith(fontSize: 12.sp),
+                                        ),
+                                      )
+                                    : const SizedBox(),
+
+                                heightSize(10),
+                                MyTextField(
+                                    onChanged: (value) {
+                                      BlocProvider.of<AuthControllersCubit>(
+                                              context)
+                                          .updateSignUp(fullName: value);
+                                    },
+                                    textInputAction: TextInputAction.next,
+                                    icon: const Icon(Icons.person_rounded),
+                                    controller: fullNameController,
+                                    title: lang.fullname),
+                                heightSize(20),
+                                MyTextField(
+                                    onChanged: (value) {
+                                      BlocProvider.of<AuthControllersCubit>(
+                                              context)
+                                          .updateSignUp(email: value);
+                                    },
+                                    textInputAction: TextInputAction.next,
+                                    icon: const Icon(Icons.mail_rounded),
+                                    controller: emailController,
+                                    title: lang.email),
+                                heightSize(20),
+                                MyTextField(
+                                    onChanged: (value) {
+                                      BlocProvider.of<AuthControllersCubit>(
+                                              context)
+                                          .updateSignUp(password: value);
+                                    },
+                                    textInputAction: TextInputAction.done,
+                                    icon: const Icon(Icons.lock_rounded),
+                                    controller: passwordController,
+                                    enableSuffixIcon: true,
+                                    suffixIcon:
+                                        const Icon(Icons.visibility_rounded),
+                                    obscureText: true,
+                                    secondSuffixIcon: const Icon(
+                                        Icons.visibility_off_rounded),
+                                    title: lang.password),
+                                heightSize(40),
+                                BlocBuilder<AuthControllersCubit,
+                                    AuthControllersState>(
+                                  builder: (context, authControllers) {
+                                    return GestureDetector(
+                                      onTap: () async {
+                                        String email = authControllers
+                                                is SignUpControllersUpdateState
+                                            ? authControllers.email
+                                            : "";
+                                        String password = authControllers
+                                                is SignUpControllersUpdateState
+                                            ? authControllers.password
+                                            : "";
+                                        String fullName = authControllers
+                                                is SignUpControllersUpdateState
+                                            ? authControllers.fullName
+                                            : "";
+                                        BlocProvider.of<AuthCubit>(context)
+                                            .signUp(
+                                          email,
+                                          fullName,
+                                          password,
+                                        );
+                                      },
+                                      child: AuthButtonText(
+                                        text: Text(
+                                          context.lang().signup,
+                                          style: authControllers
+                                                      is SignUpControllersUpdateState &&
+                                                  authControllers
+                                                      .email.isNotEmpty &&
+                                                  authControllers
+                                                      .password.isNotEmpty &&
+                                                  authControllers
+                                                      .email.isNotEmpty
+                                              ? TextStyles.whiteW500(context)
+                                                  .copyWith(
+                                                  fontSize: 15.sp,
+                                                )
+                                              : TextStyles.whiteW500(context)
+                                                  .copyWith(
+                                                      fontSize: 15.sp,
+                                                      color: Colors.white),
+                                        ),
+                                        color: authControllers
+                                                    is SignUpControllersUpdateState &&
+                                                authControllers
+                                                    .email.isNotEmpty &&
+                                                authControllers
+                                                    .password.isNotEmpty &&
+                                                authControllers.email.isNotEmpty
+                                            ? theme.colorScheme.secondary
+                                            : theme.colorScheme.onSecondary,
+                                      ),
+                                    );
+                                  },
+                                ),
+
+                                heightSize(20),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    widthSize(20),
+                                    Expanded(
+                                      child: Divider(
+                                        color: theme.colorScheme.onSecondary
+                                            .withOpacity(0.5),
+                                        height: 5.h,
+                                      ),
+                                    ),
+                                    widthSize(20),
+                                    Text(
+                                      lang.orcontinuewith,
+                                      style: TextStyles.blackW500(context),
+                                    ),
+                                    widthSize(10),
+                                    Expanded(
+                                      child: Divider(
+                                        color: theme.colorScheme.onSecondary
+                                            .withOpacity(0.5),
+                                        height: 5.h,
+                                      ),
+                                    ),
+                                    widthSize(20),
+                                  ],
+                                ),
+
+                                heightSize(20),
+                                const AuthWithGoogleButton(),
+                                heightSize(20),
+
+                                //? -----------------------don't have an account sign up---------------------------
+                                Container(
+                                  width: double.infinity,
+                                  height: 20.h,
+                                  margin:
+                                      EdgeInsets.symmetric(horizontal: 80.w),
+                                  child: FittedBox(
+                                      child: RichText(
+                                    text: TextSpan(children: [
+                                      TextSpan(
+                                          text:
+                                              '${lang.alreadyHaveAnAccount}? ',
+                                          style: TextStyles.greyW500(context)
+                                              .copyWith(fontSize: 4.sp)),
+                                      TextSpan(
+                                          text: lang.login,
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () {
+                                              Navigator.pop(context);
+                                            },
+                                          style: TextStyles.blackW900WithShadow(
+                                                  context)
+                                              .copyWith(fontSize: 4.sp)),
+                                    ]),
+                                  )),
+                                ),
+                                heightSize(20)
+                              ]),
                         ),
                       ],
                     ),
                   ),
-                )
-              ],
+                ),
+              ),
             ),
-          ),
-        ),
-      ),
     );
   }
 }

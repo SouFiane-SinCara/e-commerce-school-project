@@ -10,10 +10,26 @@
     "signinwithgoogle":"Sign in with Google",
     "orcontinuewith":"or continue with",
     "donthaveanaccount":"Don't have an account ",
-    "signup":"SignUp",
+    "signup":"Sign Up",
     "email":"Email",
     "password":"Password",
-    "login":"Login"
+    "login":"Login",
+    "fullname":"Full name",
+    "createYour":"Create your",
+    "alreadyHaveAnAccount":"Already have an account",
+    "serverLoginFailure": "Server error during login.",
+    "wrongPasswordOrEmailFailure": "Wrong email or password.",
+    "serverSignUpFailure": "Server error during sign up.",
+    "emailAlreadyUsedFailure": "Email already in use.",
+    "weakPasswordFailure": "Weak password.",
+    "nonInternetConnectionFailure": "No internet connection.",
+    "emailBadFormatFailure": "Invalid email format.",
+    "sendResetEmail":"Send Reset Email",
+    "resetPasswordInformation":"Enter the email address and we'll send an email with confirmation to reset your password.",
+    "serverForgotPasswordFailure":"Server error occurred during email sending",
+    "accountNotRegistered":"Account non registrato."
+    
+
     
 
 }
