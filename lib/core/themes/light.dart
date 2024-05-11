@@ -4,7 +4,7 @@ class LightTheme {
   ThemeData lightTheme = ThemeData(
     primaryColor: const Color(0xFF101010),
     scaffoldBackgroundColor: const Color(0xFFffffff),
-    colorScheme:  ColorScheme(
+    colorScheme: ColorScheme(
         brightness: Brightness.light,
         secondaryContainer: Colors.grey.withOpacity(0.2),
         primaryContainer: const Color(0xFFfafafa),
@@ -20,5 +20,6 @@ class LightTheme {
         onSurface: const Color(0xFF101010)),
     brightness: Brightness.light,
     shadowColor: Colors.black.withOpacity(0.5),
+     
   );
 }

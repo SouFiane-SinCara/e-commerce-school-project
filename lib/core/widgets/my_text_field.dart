@@ -43,6 +43,7 @@ class _MyTextFieldState extends State<MyTextField> {
       child: TextField(
         onChanged: widget.onChanged,
         textInputAction: widget.textInputAction,
+        controller: widget.controller,
         obscureText: widget.obscureText != null && hideContent == true,
         style: TextStyle(
             color: theme.brightness == Brightness.dark

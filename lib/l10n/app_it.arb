@@ -13,5 +13,16 @@
     "login":"Accedi",
     "fullname":"Nome e Cognome",
     "createYour":"Crea il tuo",
-    "alreadyHaveAnAccount":"Hai già un account"
+    "alreadyHaveAnAccount":"Hai già un account",
+    "serverLoginFailure": "Errore del server durante il login.",
+    "wrongPasswordOrEmailFailure": "Email o password errate.",
+    "serverSignUpFailure": "Errore del server durante la registrazione.",
+    "emailAlreadyUsedFailure": "Email già in uso.",
+    "weakPasswordFailure": "Password debole.",
+    "nonInternetConnectionFailure": "Connessione internet assente.",
+    "emailBadFormatFailure": "Formato email non valido.",
+    "sendResetEmail":"Invia Email di Reimpostazione",
+    "resetPasswordInformation":"Inserisci l'indirizzo email e ti invieremo un'email di conferma per reimpostare la tua password.",
+    "serverForgotPasswordFailure":"Errore del server durante l'invio dell'email.",
+    "accountNotRegistered":"Account not registered."
 }

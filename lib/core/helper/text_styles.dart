@@ -149,4 +149,19 @@ class TextStyles {
             color: theme.colorScheme.primary,
             fontWeight: FontWeight.w500);
   }
+
+  static TextStyle redW600(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    return theme.brightness == Brightness.light
+        //light theme
+        ? TextStyle(
+            fontFamily: normalFontStyle,
+            color: theme.colorScheme.error,
+            fontWeight: FontWeight.w600)
+        //dark theme
+        : TextStyle(
+            fontFamily: normalFontStyle,
+            color: theme.colorScheme.error,
+            fontWeight: FontWeight.w600);
+  }
 }

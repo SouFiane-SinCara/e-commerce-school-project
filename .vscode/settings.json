@@ -1,0 +1,19 @@
+{
+    "spellright.language": [],
+    "spellright.documentTypes": [
+        "markdown",
+        "latex",
+        "plaintext"
+    ],
+    "spellright.parserByClass": {
+        "dart": {
+            "parser": "plain"
+        }
+    },
+    "cSpell.words": [
+        "ARGB",
+        "firestore",
+        "sizedbox",
+        "usecases"
+    ]
+}

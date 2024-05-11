@@ -1,7 +1,6 @@
-class RoutesNames{ 
-   static const String initialRoutePageName = "/";
-   static const String loginPageName = "/login";
-   static const String signUpPageName = "/signUp";
-   
-
+class RoutesNames {
+  static const String loginPageName = "/";
+  static const String signUpPageName = "/signUp";
+  static const String forgotPasswordPageName = "/forgotPassword";
+  static const String productsPageName = "/products";
 }
