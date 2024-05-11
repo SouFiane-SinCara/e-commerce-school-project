@@ -16,12 +16,12 @@ class AuthButtonText extends StatelessWidget {
       width: double.infinity,
       height: 50.h,
       decoration: BoxDecoration(
-          //todo : adjust dark theme
+          //TODO : adjust dark theme
           boxShadow: [
             BoxShadow(
                 color: theme.shadowColor,
                 offset: Offset.fromDirection(4, -6),
-                blurRadius: 12)
+                blurRadius: 4)
           ],
           color: color,
           borderRadius: BorderRadius.horizontal(
