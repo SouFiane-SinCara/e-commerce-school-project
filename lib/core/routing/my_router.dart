@@ -4,7 +4,7 @@ import 'package:e_commerce_school_project/core/routing/routes_name.dart';
 import 'package:e_commerce_school_project/features/authentication/presentation/screens/forgot_password_page.dart';
 import 'package:e_commerce_school_project/features/authentication/presentation/screens/login_page.dart';
 import 'package:e_commerce_school_project/features/authentication/presentation/screens/signup_page.dart';
-import 'package:e_commerce_school_project/features/products/presentation/pages/products_page.dart';
+import 'package:e_commerce_school_project/features/products/presentation/screens/products_page.dart';
 import 'package:flutter/material.dart';
 
 class MyRouter {
