@@ -14,7 +14,7 @@ class DarkTheme {
         error: Color.fromARGB(255, 255, 137, 137),
         onError: Color.fromARGB(255, 255, 137, 137),
         background: Color(0xFF201c24),
-        onBackground: Color(0xFF201c24),
+        onBackground: Color(0xFF35383f),
         surface: Color(0xFF201c24),
         onSurface: Color(0xFF201c24)),
     shadowColor: const Color.fromARGB(10, 255, 255, 255),

@@ -1,31 +1,56 @@
+# Project information
 name: e_commerce_school_project
-description: "e_commerce with authentication , multi language , responsive
-  design , firebase , payment gateway "
+description: "e_commerce with authentication , multi language , responsive design , firebase , payment gateway "
 publish_to: 'none'
 version: 0.1.0
 
+# Flutter SDK version
 environment:
   sdk: '>=3.3.2 <4.0.0'
 
+# Project dependencies
 dependencies:
-  bloc: ^8.1.4
-  cloud_firestore: ^4.17.2
-  dartz: ^0.10.1
-  equatable: ^2.0.5
-  firebase_auth: ^4.19.2
-  firebase_core: ^2.30.0
+  # Flutter SDK
   flutter:
     sdk: flutter
+
+  # State management
+  bloc: ^8.1.4
   flutter_bloc: ^8.1.5
+
+  # Firebase
+  cloud_firestore: ^4.17.2
+  firebase_auth: ^4.19.2
+  firebase_core: ^2.30.0
+
+  # Functional programming
+  dartz: ^0.10.1
+
+  # Value equality
+  equatable: ^2.0.5
+
+  # Flutter localization
   flutter_localizations:
     sdk: flutter
+
+  # Responsive design
   flutter_screenutil: ^5.9.0
+
+  # SVG support
   flutter_svg: ^2.0.10+1
+
+  # Key-value storage
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  path: ^1.9.0
   shared_preferences: ^2.2.3
 
+  # Path handling
+  path: ^1.9.0
+
+  # UI components
+  google_nav_bar: ^5.0.6
+
+# Development dependencies
 dev_dependencies:
   build_runner: ^2.4.9
   flutter_lints: ^3.0.0
@@ -33,15 +58,18 @@ dev_dependencies:
     sdk: flutter
   hive_generator: ^2.0.1
 
+# Flutter app configuration
 flutter:
   uses-material-design: true
   generate: true
 
-  assets:
-    - lib/core/assets/images/
-    - lib/core/assets/icons/
+# Application assets
+assets:
+  - lib/core/assets/images/
+  - lib/core/assets/icons/
 
-  fonts:
-    - family: Coco-Sharp
-      fonts:
-        - asset: lib/core/assets/fonts/Coco-Sharp-Regular-trial.ttf
+# Font assets
+fonts:
+  - family: Coco-Sharp
+    fonts:
+      - asset: lib/core/assets/fonts/Coco-Sharp-Regular-trial.ttf

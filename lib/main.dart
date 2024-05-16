@@ -1,8 +1,9 @@
 import 'package:e_commerce_school_project/features/authentication/presentation/logic/Auth_controllers_cubit/Auth_controllers_cubit.dart';
 import 'package:e_commerce_school_project/features/authentication/presentation/logic/Auth_cubit/Auth_cubit.dart';
- import 'package:e_commerce_school_project/features/multi_language/presentation/logic/language_changer_cubit/language_changer_cubit.dart';
+import 'package:e_commerce_school_project/features/multi_language/presentation/logic/language_changer_cubit/language_changer_cubit.dart';
 import 'package:e_commerce_school_project/core/routing/my_router.dart';
 import 'package:e_commerce_school_project/core/themes/dark.dart';
+import 'package:e_commerce_school_project/firebase_options.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'core/themes/light.dart';
@@ -18,8 +19,8 @@ import 'package:firebase_core/firebase_core.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  await Firebase.initializeApp();
-  
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   runApp(const MainApp());
 }
 
