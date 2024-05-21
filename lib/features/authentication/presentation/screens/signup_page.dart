@@ -51,7 +51,7 @@ class _SignUpPageState extends State<SignUpPage> {
           return lang.emailAlreadyUsedFailure;
         case const (WeakPasswordSignUpFailure):
           return lang.weakPasswordFailure;
-        case const (NonInternetConnectionFailure):
+        case const (NonInternetConnectionSignUpFailure):
           return lang.nonInternetConnectionFailure;
         case const (EmailBadFormatSignUpFailure):
           return lang.emailBadFormatFailure;

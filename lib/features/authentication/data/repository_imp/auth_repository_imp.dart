@@ -28,6 +28,8 @@ class AuthRepositoryImp extends AuthRepository {
       return Left(EmailBadFormatLoginFailure());
     } on WeakPasswordException {
       return Left(WeakPasswordLoginFailure());
+    } on NonInternetConnectionException {
+      return Left(NonInternetConnectionLoginFailure());
     } on WrongPasswordOrEmailException {
       return Left(WrongPasswordOrEmailFailure());
     }
@@ -48,7 +50,7 @@ class AuthRepositoryImp extends AuthRepository {
     } on WeakPasswordException {
       return Left(WeakPasswordSignUpFailure());
     } on NonInternetConnectionException {
-      return Left(NonInternetConnectionFailure());
+      return Left(NonInternetConnectionSignUpFailure());
     } on EmailBadFormatException {
       return Left(EmailBadFormatSignUpFailure());
     } on EmailAlreadyUsedException {
@@ -94,6 +96,8 @@ class AuthRepositoryImp extends AuthRepository {
       return Left(ServerForgotPasswordFailure());
     } on NotRegisteredException {
       return Left(NotRegisterFailure());
+    } on NonInternetConnectionException {
+      return Left(NonInternetConnectionForgotPasswordFailure());
     } on EmailBadFormatException {
       return Left(EmailBadFormatForgotPasswordFailure());
     }

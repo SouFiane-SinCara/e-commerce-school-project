@@ -27,7 +27,11 @@
     "sendResetEmail":"Send Reset Email",
     "resetPasswordInformation":"Enter the email address and we'll send an email with confirmation to reset your password.",
     "serverForgotPasswordFailure":"Server error occurred during email sending",
-    "accountNotRegistered":"Account non registrato."
+    "accountNotRegistered":"Account non registrato.",
+    "items":"Items",
+    "yourWishlistIsEmpty":"Your wishlist is empty.",
+    "yourCartIsEmpty":"Your cart is empty.",
+    "thereAreNoItemsForSaleAtTheMoment":"There are no items for sale at the moment."
     
 
     

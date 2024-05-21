@@ -24,6 +24,11 @@ class WeakPasswordLoginFailure extends LoginFailures {
   List<Object?> get props => [];
 }
 
+class NonInternetConnectionLoginFailure extends LoginFailures {
+  @override
+  List<Object?> get props => [];
+}
+
 abstract class SignUpFailures extends Failures {}
 
 class ServerSignUpFailure extends SignUpFailures {
@@ -41,7 +46,7 @@ class WeakPasswordSignUpFailure extends SignUpFailures {
   List<Object?> get props => [];
 }
 
-class NonInternetConnectionFailure extends SignUpFailures {
+class NonInternetConnectionSignUpFailure extends SignUpFailures {
   @override
   List<Object?> get props => [];
 }
@@ -76,11 +81,39 @@ class EmailBadFormatForgotPasswordFailure extends ForgotPasswordFailure {
   @override
   List<Object?> get props => [];
 }
+
 class NotRegisterFailure extends ForgotPasswordFailure {
   @override
   List<Object?> get props => [];
 }
+
 class ServerForgotPasswordFailure extends ForgotPasswordFailure {
+  @override
+  List<Object?> get props => [];
+}
+
+class NonInternetConnectionForgotPasswordFailure extends ForgotPasswordFailure {
+  @override
+  List<Object?> get props => [];
+}
+
+abstract class GetProductsFailures extends Failures {}
+
+class ServerGetProductsFailure extends GetProductsFailures {
+  @override
+  List<Object?> get props => [];
+}
+
+abstract class AddToWishListFailure extends Failures {}
+
+class ServerAddToWishListFailure extends AddToWishListFailure {
+  @override
+  List<Object?> get props => [];
+}
+
+abstract class DeleteFromWishListFailure extends Failures {}
+
+class ServerDeleteFromWishListFailure extends DeleteFromWishListFailure {
   @override
   List<Object?> get props => [];
 }

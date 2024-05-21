@@ -58,7 +58,9 @@ class _LoginPageState extends State<LoginPage> {
           return lang.emailAlreadyUsedFailure;
         case const (WeakPasswordSignUpFailure):
           return lang.weakPasswordFailure;
-        case const (NonInternetConnectionFailure):
+        case const (NonInternetConnectionSignUpFailure):
+          return lang.nonInternetConnectionFailure;
+          case const (NonInternetConnectionLoginFailure):
           return lang.nonInternetConnectionFailure;
         case const (EmailBadFormatSignUpFailure):
           return lang.emailBadFormatFailure;

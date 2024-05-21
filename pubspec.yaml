@@ -62,11 +62,14 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
-
 # Application assets
-assets:
-  - lib/core/assets/images/
-  - lib/core/assets/icons/
+  assets:
+    - lib/core/assets/images/google_logo.png
+
+  
+
+
+
 
 # Font assets
 fonts:

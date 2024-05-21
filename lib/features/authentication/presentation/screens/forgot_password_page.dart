@@ -40,7 +40,7 @@ class ForgotPasswordPage extends StatelessWidget {
           return lang.emailAlreadyUsedFailure;
         case const (WeakPasswordSignUpFailure):
           return lang.weakPasswordFailure;
-        case const (NonInternetConnectionFailure):
+        case const (NonInternetConnectionForgotPasswordFailure):
           return lang.nonInternetConnectionFailure;
         case const (EmailBadFormatSignUpFailure):
           return lang.emailBadFormatFailure;

@@ -3,7 +3,11 @@ import 'package:e_commerce_school_project/features/authentication/presentation/l
 import 'package:e_commerce_school_project/features/multi_language/presentation/logic/language_changer_cubit/language_changer_cubit.dart';
 import 'package:e_commerce_school_project/core/routing/my_router.dart';
 import 'package:e_commerce_school_project/core/themes/dark.dart';
+import 'package:e_commerce_school_project/features/products/domain/entities/product.dart';
+import 'package:e_commerce_school_project/features/products/presentation/blocs/cubit/wish_list_cubit.dart';
+import 'package:e_commerce_school_project/features/products/presentation/blocs/get_products_cubit/cubit/get_products_cubit.dart';
 import 'package:e_commerce_school_project/firebase_options.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'core/themes/light.dart';
@@ -18,6 +22,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Hive.initFlutter();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
@@ -35,6 +40,8 @@ class MainApp extends StatelessWidget {
             create: (context) => LanguageChangerCubit()..getLanguage()),
         BlocProvider(create: (context) => AuthCubit()),
         BlocProvider(create: (context) => AuthControllersCubit()),
+        BlocProvider(create: (context) => WishListCubit()),
+        BlocProvider(create: (context) => GetProductsCubit()),
       ],
       child: ScreenUtilInit(
           designSize: const Size(360, 690),
