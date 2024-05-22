@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/widgets.dart';
 
 class Product extends Equatable {
   final String id;
@@ -11,7 +10,7 @@ class Product extends Equatable {
   final int stock;
   final String category;
   final List<String> colors;
-  bool isFavorite; // default false
+  bool ? isFavorite; // default false
 
   Product({
     required this.id,

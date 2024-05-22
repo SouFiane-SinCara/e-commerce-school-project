@@ -71,19 +71,19 @@ class ProductCart extends StatelessWidget {
                               Account account =
                                   BlocProvider.of<AuthCubit>(context).account!;
                               if (isWishList == null) {
-                                setFavoriteState(
-                                  () =>
-                                      product.isFavorite = !product.isFavorite,
-                                );
+                                if (product.isFavorite == false) {
+                                  setFavoriteState(
+                                    () => product.isFavorite =
+                                        !product.isFavorite!,
+                                  );
 
-                                BlocProvider.of<WishListCubit>(context)
-                                    .addToWishList(
-                                        product: product, account: account);
+                                  BlocProvider.of<WishListCubit>(context)
+                                      .addToWishList(
+                                          product: product, account: account);
+                                }
                               } else {
-                                setFavoriteState(
-                                  () =>
-                                      product.isFavorite = !product.isFavorite,
-                                );
+                                setFavoriteState(() =>
+                                    product.isFavorite = !product.isFavorite!);
 
                                 BlocProvider.of<WishListCubit>(context)
                                     .deleteFromWishList(
@@ -93,7 +93,7 @@ class ProductCart extends StatelessWidget {
                             child: isWishList == null
                                 ? Container(
                                     decoration: BoxDecoration(
-                                      color: !product.isFavorite
+                                      color: !product.isFavorite!
                                           ? theme.colorScheme.primary
                                           : theme.colorScheme.secondary,
                                       border: Border.all(
@@ -102,7 +102,7 @@ class ProductCart extends StatelessWidget {
                                       shape: BoxShape.circle,
                                     ),
                                     child: Icon(
-                                        !product.isFavorite
+                                        !product.isFavorite!
                                             ? Icons.favorite_rounded
                                             : Icons.done_rounded,
                                         size: 20.sp,
@@ -113,7 +113,7 @@ class ProductCart extends StatelessWidget {
                                             offset: Offset(0, 0),
                                           ),
                                         ],
-                                        color: !product.isFavorite
+                                        color: !product.isFavorite!
                                             ? theme.colorScheme.secondary
                                             : theme.colorScheme.primary),
                                   )

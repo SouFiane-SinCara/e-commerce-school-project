@@ -28,5 +28,12 @@
     "items": "Articoli",
     "yourWishlistIsEmpty": "La tua lista dei desideri è vuota.",
     "yourCartIsEmpty": "Il tuo carrello è vuoto.", 
-    "thereAreNoItemsForSaleAtTheMoment": "Al momento non ci sono articoli in vendita."
+    "thereAreNoItemsForSaleAtTheMoment": "Al momento non ci sono articoli in vendita.",
+    "more":"altro",
+    "less":"meno",
+    "colors":"Colori",
+    "sizes":"Dimensioni",
+    "quantity":"Quantità",
+    "totalePrice":"Prezzo totale",
+    "addToCart":"Aggiungi al carrello"
 }

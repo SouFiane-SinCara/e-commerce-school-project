@@ -31,7 +31,14 @@
     "items":"Items",
     "yourWishlistIsEmpty":"Your wishlist is empty.",
     "yourCartIsEmpty":"Your cart is empty.",
-    "thereAreNoItemsForSaleAtTheMoment":"There are no items for sale at the moment."
+    "thereAreNoItemsForSaleAtTheMoment":"There are no items for sale at the moment.",
+    "more":"more",
+    "less":"less",
+    "colors":"Colors",
+    "sizes":"Sizes",
+    "quantity":"Quantity",
+    "totalePrice":"Total price",
+    "addToCart":"Add to cart"
     
 
     

@@ -1,6 +1,7 @@
 import 'package:e_commerce_school_project/core/helper/extension.dart';
 import 'package:e_commerce_school_project/core/helper/my_sizedbox.dart';
 import 'package:e_commerce_school_project/core/helper/text_styles.dart';
+import 'package:e_commerce_school_project/core/routing/routes_name.dart';
 import 'package:e_commerce_school_project/core/widgets/loading.dart';
 import 'package:e_commerce_school_project/features/authentication/domain/entities/account.dart';
 import 'package:e_commerce_school_project/features/authentication/presentation/logic/Auth_cubit/Auth_cubit.dart';
@@ -79,7 +80,14 @@ class ProductsPage extends StatelessWidget {
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         return GestureDetector(
-                                          onTap: () async {},
+                                          onTap: () {
+                                            Navigator.pushNamed(
+                                                context,
+                                                RoutesNames
+                                                    .detailsProductPageName,
+                                                arguments: getProductsState
+                                                    .products[index]);
+                                          },
                                           child: Container(
                                             margin: EdgeInsets.only(
                                                 top: index == 0 || index == 1
