@@ -49,6 +49,7 @@ dependencies:
 
   # UI components
   google_nav_bar: ^5.0.6
+ 
 
 # Development dependencies
 dev_dependencies:

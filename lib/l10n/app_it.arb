@@ -35,5 +35,7 @@
     "sizes":"Dimensioni",
     "quantity":"Quantità",
     "totalePrice":"Prezzo totale",
-    "addToCart":"Aggiungi al carrello"
+    "addToCart":"Aggiungi al carrello",
+    "checkout":"Procedere all'ordine",
+    "itemAddedToCartSuccessfully": "Articolo aggiunto correttamente al carrello!"
 }

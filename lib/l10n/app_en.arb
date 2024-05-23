@@ -35,10 +35,14 @@
     "more":"more",
     "less":"less",
     "colors":"Colors",
+    "color":"Color",
     "sizes":"Sizes",
+    "size":"Size",
     "quantity":"Quantity",
     "totalePrice":"Total price",
-    "addToCart":"Add to cart"
+    "addToCart":"Add to cart",
+    "checkout":"Checkout",
+    "itemAddedToCartSuccessfully": "Item added to cart successfully!"
     
 
     

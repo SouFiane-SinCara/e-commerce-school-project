@@ -3,8 +3,10 @@ import 'package:e_commerce_school_project/core/helper/my_sizedbox.dart';
 import 'package:e_commerce_school_project/core/helper/text_styles.dart';
 import 'package:e_commerce_school_project/features/authentication/domain/entities/account.dart';
 import 'package:e_commerce_school_project/features/authentication/presentation/logic/Auth_cubit/Auth_cubit.dart';
+import 'package:e_commerce_school_project/features/products/domain/entities/checkout.dart';
 import 'package:e_commerce_school_project/features/products/domain/entities/product.dart';
-import 'package:e_commerce_school_project/features/products/presentation/blocs/cubit/wish_list_cubit.dart';
+import 'package:e_commerce_school_project/features/products/presentation/blocs/cart_cubit.dart/cubit/cart_cubit.dart';
+import 'package:e_commerce_school_project/features/products/presentation/blocs/wish_list_cubit/wish_list_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,9 +19,44 @@ class DetailsProductsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeData theme = context.themes();
     final lang = context.lang();
+    void showAddToCartDialog(BuildContext context) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: theme.colorScheme.primary,
+            title: Text(
+              context.lang().itemAddedToCartSuccessfully,
+              style: TextStyles.blackW600(context).copyWith(fontSize: 15.sp),
+              textAlign: TextAlign.center,
+            ),
+            content: Icon(
+              Icons.check_circle_outline_sharp,
+              color: theme.colorScheme.secondary,
+              size: 80.sp,
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+                child: Text(
+                  'OK',
+                  style:
+                      TextStyles.blackW600(context).copyWith(fontSize: 15.sp),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     bool readMore = false;
-    Color? selectedColor;
-    String? selectedSize;
+    Color? selectedColor = product.colors.isEmpty
+        ? null
+        : Color(int.parse(product.colors.first.replaceAll('#', '0xff')));
+    String? selectedSize = product.sizes.isEmpty ? null : product.sizes.first;
     int quantity = 1;
     return SafeArea(
         child: Scaffold(
@@ -114,7 +151,7 @@ class DetailsProductsPage extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: Container(
                       alignment: Alignment.center,
-                      width: 70.w,
+                      width: 80.w,
                       decoration: BoxDecoration(
                         color: theme.colorScheme.onBackground,
                         borderRadius: BorderRadius.circular(5),
@@ -153,7 +190,7 @@ class DetailsProductsPage extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 10.w),
                       child: Text(
-                        product.description * 50,
+                        product.description,
                         style: TextStyles.blackW500(context)
                             .copyWith(fontSize: 12.sp),
                         maxLines: readMore ? null : 2,
@@ -180,124 +217,137 @@ class DetailsProductsPage extends StatelessWidget {
               },
             ),
             heightSize(20),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10.w),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                lang.colors + " :",
-                style: TextStyles.blackW600(context).copyWith(fontSize: 17.sp),
-              ),
-            ),
-            heightSize(15),
-            StatefulBuilder(
-              builder: (context, setSelectedColorState) => Container(
-                height: 40.h,
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 10.w),
-                child: ListView.builder(
-                  itemCount: product.colors.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                      onTap: () {
-                        setSelectedColorState(() {
-                          selectedColor = Color(int.parse(
-                              product.colors[index].replaceAll('#', '0xff')));
-                        });
-                      },
-                      child: selectedColor != null &&
-                              Color(int.parse(product.colors[index]
-                                      .replaceAll('#', '0xff'))) ==
-                                  selectedColor
-                          ? Stack(
-                              children: [
-                                Container(
-                                  width: 40.w,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          width: 4,
-                                          color: theme.colorScheme.primary),
-                                      shape: BoxShape.circle,
-                                      color: Color(int.parse(product
-                                          .colors[index]
-                                          .replaceAll('#', '0xff')))),
-                                ),
-                                Positioned(
-                                  top: 0,
-                                  right: 0,
-                                  bottom: 0,
-                                  left: 0,
-                                  child: Icon(
-                                    Icons.done,
-                                    color: theme.colorScheme.secondary,
-                                    size: 20.sp,
+            product.colors.isEmpty
+                ? SizedBox()
+                : Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10.w),
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      lang.colors + " :",
+                      style: TextStyles.blackW600(context)
+                          .copyWith(fontSize: 17.sp),
+                    ),
+                  ),
+            product.colors.isEmpty ? SizedBox() : heightSize(15),
+            product.colors.isEmpty
+                ? SizedBox()
+                : StatefulBuilder(
+                    builder: (context, setSelectedColorState) => Container(
+                      height: 40.h,
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(horizontal: 10.w),
+                      child: ListView.builder(
+                        itemCount: product.colors.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                            onTap: () {
+                              setSelectedColorState(() {
+                                selectedColor = Color(int.parse(product
+                                    .colors[index]
+                                    .replaceAll('#', '0xff')));
+                              });
+                            },
+                            child: selectedColor != null &&
+                                    Color(int.parse(product.colors[index]
+                                            .replaceAll('#', '0xff'))) ==
+                                        selectedColor
+                                ? Stack(
+                                    children: [
+                                      Container(
+                                        width: 40.w,
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                width: 4,
+                                                color:
+                                                    theme.colorScheme.primary),
+                                            shape: BoxShape.circle,
+                                            color: Color(int.parse(product
+                                                .colors[index]
+                                                .replaceAll('#', '0xff')))),
+                                      ),
+                                      Positioned(
+                                        top: 0,
+                                        right: 0,
+                                        bottom: 0,
+                                        left: 0,
+                                        child: Icon(
+                                          Icons.done,
+                                          color: theme.colorScheme.secondary,
+                                          size: 20.sp,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : Container(
+                                    width: 40.w,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Color(int.parse(product
+                                            .colors[index]
+                                            .replaceAll('#', '0xff')))),
                                   ),
-                                ),
-                              ],
-                            )
-                          : Container(
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+            heightSize(10),
+            product.sizes.isEmpty
+                ? SizedBox()
+                : Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10.w),
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      lang.sizes + " :",
+                      style: TextStyles.blackW600(context)
+                          .copyWith(fontSize: 17.sp),
+                    )),
+            heightSize(10.h),
+            product.sizes.isEmpty
+                ? SizedBox()
+                : StatefulBuilder(
+                    builder: (context, setSelectedSizeState) => Container(
+                      height: 40.h,
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(horizontal: 10.w),
+                      child: ListView.builder(
+                        itemCount: product.sizes.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                            onTap: () {
+                              setSelectedSizeState(() {
+                                selectedSize = product.sizes[index];
+                              });
+                            },
+                            child: Container(
                               width: 40.w,
+                              alignment: Alignment.center,
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Color(int.parse(product.colors[index]
-                                      .replaceAll('#', '0xff')))),
+                                  border: Border.all(
+                                      width: 2,
+                                      color: theme.colorScheme.secondary),
+                                  color: selectedSize != null &&
+                                          selectedSize == product.sizes[index]
+                                      ? theme.colorScheme.secondary
+                                      : theme.colorScheme.primary),
+                              child: Text(
+                                product.sizes[index],
+                                style: selectedSize != null &&
+                                        selectedSize == product.sizes[index]
+                                    ? TextStyles.whiteW500(context)
+                                        .copyWith(fontSize: 15.sp)
+                                    : TextStyles.blackW500(context)
+                                        .copyWith(fontSize: 15.sp),
+                              ),
                             ),
-                    );
-                  },
-                ),
-              ),
-            ),
-            heightSize(10),
-            Container(
-                padding: EdgeInsets.symmetric(horizontal: 10.w),
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  lang.sizes + " :",
-                  style:
-                      TextStyles.blackW600(context).copyWith(fontSize: 17.sp),
-                )),
-            heightSize(10.h),
-            StatefulBuilder(
-              builder: (context, setSelectedSizeState) => Container(
-                height: 40.h,
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 10.w),
-                child: ListView.builder(
-                  itemCount: product.sizes.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                      onTap: () {
-                        setSelectedSizeState(() {
-                          selectedSize = product.sizes[index];
-                        });
-                      },
-                      child: Container(
-                        width: 40.w,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                                width: 2, color: theme.colorScheme.secondary),
-                            color: selectedSize != null &&
-                                    selectedSize == product.sizes[index]
-                                ? theme.colorScheme.secondary
-                                : theme.colorScheme.primary),
-                        child: Text(
-                          product.sizes[index],
-                          style: selectedSize != null &&
-                                  selectedSize == product.sizes[index]
-                              ? TextStyles.whiteW500(context)
-                                  .copyWith(fontSize: 15.sp)
-                              : TextStyles.blackW500(context)
-                                  .copyWith(fontSize: 15.sp),
-                        ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
-              ),
-            ),
+                    ),
+                  ),
             heightSize(20.h),
             StatefulBuilder(
               builder: (BuildContext context, setQuantityState) {
@@ -395,7 +445,8 @@ class DetailsProductsPage extends StatelessWidget {
                                   alignment: Alignment.centerLeft,
                                   child: Text(
                                     "\$" +
-                                        (product.price * quantity).toStringAsFixed(2),
+                                        (product.price * quantity)
+                                            .toStringAsFixed(2),
                                     style: TextStyles.blackW900(context)
                                         .copyWith(fontSize: 30.sp),
                                     maxLines: 1,
@@ -406,27 +457,61 @@ class DetailsProductsPage extends StatelessWidget {
                           ),
                           StatefulBuilder(
                               builder: (context, setAddToCardColorState) {
-                            return Container(
-                              width: 180.w,
-                              height: 50.h,
-                              decoration: BoxDecoration(
-                                  color: theme.colorScheme.secondary,
-                                  borderRadius: BorderRadius.circular(30)),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.shopping_bag_rounded,
-                                    color: theme.colorScheme.primary,
-                                    size: 25.sp,
-                                  ),
-                                  widthSize(10),
-                                  Text(
-                                    lang.addToCart,
-                                    style: TextStyles.whiteW900(context)
-                                        .copyWith(fontSize: 15.sp),
-                                  )
-                                ],
+                            return GestureDetector(
+                              onTap: () async {
+                                String colorToHex(Color color) {
+                                  String hexColor = color.value
+                                      .toRadixString(16)
+                                      .padLeft(8, '0');
+
+                                  return '#${hexColor.substring(0, 2)}${hexColor.substring(2, 8)}';
+                                }
+
+                                Account account =
+                                    BlocProvider.of<AuthCubit>(context)
+                                        .account!;
+                                await BlocProvider.of<CartCubit>(context)
+                                    .addToCart(
+                                        account: account,
+                                        newCheckout: Checkout(
+                                          productId: product.id,
+                                          title: product.title,
+                                          image: product.image,
+                                          price: product.price * quantity,
+                                          description: product.description,
+                                          size: selectedSize,
+                                          category: product.category,
+                                          color: selectedColor == null
+                                              ? null
+                                              : colorToHex(selectedColor!),
+                                          quantity: quantity,
+                                          fullName: account.fullName,
+                                          email: account.email,
+                                        ));
+                                showAddToCartDialog(context);
+                              },
+                              child: Container(
+                                width: 180.w,
+                                height: 50.h,
+                                decoration: BoxDecoration(
+                                    color: theme.colorScheme.secondary,
+                                    borderRadius: BorderRadius.circular(30)),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.shopping_bag_rounded,
+                                      color: theme.colorScheme.primary,
+                                      size: 25.sp,
+                                    ),
+                                    widthSize(10),
+                                    Text(
+                                      lang.addToCart,
+                                      style: TextStyles.whiteW900(context)
+                                          .copyWith(fontSize: 15.sp),
+                                    )
+                                  ],
+                                ),
                               ),
                             );
                           })

@@ -13,7 +13,7 @@ class DarkTheme {
         onSecondary: Color(0xFF393939),
         error: Color.fromARGB(255, 255, 137, 137),
         onError: Color.fromARGB(255, 255, 137, 137),
-        background: Color(0xFF201c24),
+        background: Color.fromARGB(10, 53, 56, 63),
         onBackground: Color(0xFF35383f),
         surface: Color(0xFF201c24),
         onSurface: Color(0xFF201c24)),

@@ -4,4 +4,6 @@ class RoutesNames {
   static const String forgotPasswordPageName = "/forgotPassword";
   static const String productsPageName = "/productsPage";
   static const String detailsProductPageName = "/productsDetailsPage";
+  static const String shippingPageName = "/shippingPage";
+
 }

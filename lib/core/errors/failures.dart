@@ -117,3 +117,22 @@ class ServerDeleteFromWishListFailure extends DeleteFromWishListFailure {
   @override
   List<Object?> get props => [];
 }
+
+abstract class AddToCartFailure extends Failures {}
+
+class AddToCartServerFailure extends AddToCartFailure {
+  @override
+  List<Object?> get props => [];
+}
+abstract class GetCartListFailure extends Failures {}
+
+class GetCartListServerFailure extends GetCartListFailure {
+  @override
+  List<Object?> get props => [];
+}
+abstract class DeleteCheckoutFailure extends Failures {}
+
+class  DeleteCheckoutServerFailure extends DeleteCheckoutFailure {
+  @override
+  List<Object?> get props => [];
+}

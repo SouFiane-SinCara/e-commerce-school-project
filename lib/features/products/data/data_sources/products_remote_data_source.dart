@@ -1,14 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_school_project/core/errors/exceptions.dart';
+import 'package:e_commerce_school_project/core/errors/failures.dart';
 import 'package:e_commerce_school_project/features/authentication/domain/entities/account.dart';
+import 'package:e_commerce_school_project/features/products/data/models/checkout_model.dart';
 import 'package:e_commerce_school_project/features/products/data/models/product_model.dart';
+import 'package:e_commerce_school_project/features/products/domain/entities/checkout.dart';
 import 'package:e_commerce_school_project/features/products/domain/entities/product.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 abstract class ProductsRemoteDataSource {
   Future<List<Product>> getProducts({required Account account});
   Future addToWishList({required Product product, required Account account});
   Future deleteFromWishList(
       {required Product product, required Account account});
+  Future addToCart({required Checkout checkout, required Account account});
+  Future<List<Checkout>> getCartList({required Account account});
+  Future deleteCheckout({required Account account, required Checkout checkout});
 }
 
 class ProductsRemoteDataSourceImp extends ProductsRemoteDataSource {
@@ -103,6 +110,87 @@ class ProductsRemoteDataSourceImp extends ProductsRemoteDataSource {
           .delete();
     } on FirebaseException {
       throw ServerException();
+    }
+  }
+
+  @override
+  Future addToCart(
+      {required Checkout checkout, required Account account}) async {
+    try {
+      FirebaseFirestore firebase = FirebaseFirestore.instance;
+
+      CheckoutModel checkoutModel = CheckoutModel(
+        productId: checkout.productId,
+        title: checkout.title,
+        image: checkout.image,
+        price: checkout.price,
+        description: checkout.description,
+        size: checkout.size,
+        category: checkout.category,
+        color: checkout.color,
+        quantity: checkout.quantity,
+        fullName: checkout.fullName,
+        email: checkout.email,
+      );
+
+      DocumentReference docRef = await firebase
+          .collection("users")
+          .doc(account.userId)
+          .collection("Cart")
+          .add(checkoutModel.toJson());
+
+      String documentId = docRef.id;
+
+      await docRef.update({ 
+        'id': documentId,
+      });
+
+      checkoutModel.id = documentId;
+      checkout.id = documentId;
+    } catch (e) {
+      throw ServerException;
+    }
+  }
+
+  @override
+  Future<List<Checkout>> getCartList({required Account account}) async {
+    try {
+      FirebaseFirestore fb = FirebaseFirestore.instance;
+      final data = await fb
+          .collection("users")
+          .doc(account.userId)
+          .collection("Cart")
+          .get();
+      List<Checkout> cart = [];
+      data.docs.forEach(
+        (element) {
+          print("elemente : ${element.data()['id']}");
+          Checkout checkout = CheckoutModel.fromJson(json: element.data());
+          cart.add(checkout);
+        },
+      );
+
+      return cart;
+    } catch (e) {
+      print(e);
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future deleteCheckout(
+      {required Account account, required Checkout checkout}) async {
+    try {
+      FirebaseFirestore fb = FirebaseFirestore.instance;
+      await fb
+          .collection("users")
+          .doc(account.userId)
+          .collection("Cart")
+          .doc(checkout.id)
+          .delete();
+    } catch (e) {
+      print(e);
+      throw DeleteCheckoutServerFailure();
     }
   }
 }

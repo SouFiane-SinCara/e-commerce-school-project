@@ -4,16 +4,16 @@ import 'package:e_commerce_school_project/core/helper/text_styles.dart';
 import 'package:e_commerce_school_project/features/authentication/domain/entities/account.dart';
 import 'package:e_commerce_school_project/features/authentication/presentation/logic/Auth_cubit/Auth_cubit.dart';
 import 'package:e_commerce_school_project/features/products/domain/entities/product.dart';
-import 'package:e_commerce_school_project/features/products/presentation/blocs/cubit/wish_list_cubit.dart';
+import 'package:e_commerce_school_project/features/products/presentation/blocs/wish_list_cubit/wish_list_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ProductCart extends StatelessWidget {
+class ProductCard extends StatelessWidget {
   final Product product;
   final bool? isWishList;
-  const ProductCart({super.key, required this.product, this.isWishList});
+  const ProductCard({super.key, required this.product, this.isWishList});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class ProductCart extends StatelessWidget {
     final lang = context.lang();
     return Container(
       decoration: BoxDecoration(
-        color: theme.colorScheme.onBackground,
+        color: theme.colorScheme.background,
         borderRadius: BorderRadius.circular(30),
       ),
       margin: EdgeInsets.symmetric(
@@ -160,6 +160,7 @@ class ProductCart extends StatelessWidget {
                           color: theme.colorScheme.onBackground,
                           borderRadius: BorderRadius.circular(5),
                         ),
+                        padding: EdgeInsets.symmetric(horizontal: 5.w),
                         child: RichText(
                           text: TextSpan(children: [
                             TextSpan(

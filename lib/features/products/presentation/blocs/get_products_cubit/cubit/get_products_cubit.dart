@@ -6,7 +6,7 @@ import 'package:e_commerce_school_project/features/products/data/data_sources/pr
 import 'package:e_commerce_school_project/features/products/data/repositories_impl/product_repository_imp.dart';
 import 'package:e_commerce_school_project/features/products/domain/entities/product.dart';
 import 'package:e_commerce_school_project/features/products/domain/use_cases/get_products_use_case.dart';
-import 'package:e_commerce_school_project/features/products/presentation/blocs/cubit/wish_list_cubit.dart';
+import 'package:e_commerce_school_project/features/products/presentation/blocs/wish_list_cubit/wish_list_cubit.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path/path.dart';

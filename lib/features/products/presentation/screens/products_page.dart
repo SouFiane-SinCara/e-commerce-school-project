@@ -7,11 +7,12 @@ import 'package:e_commerce_school_project/features/authentication/domain/entitie
 import 'package:e_commerce_school_project/features/authentication/presentation/logic/Auth_cubit/Auth_cubit.dart';
 import 'package:e_commerce_school_project/features/products/data/data_sources/products_remote_data_source.dart';
 import 'package:e_commerce_school_project/features/products/domain/entities/product.dart';
-import 'package:e_commerce_school_project/features/products/presentation/blocs/cubit/wish_list_cubit.dart';
+import 'package:e_commerce_school_project/features/products/presentation/blocs/cart_cubit.dart/cubit/cart_cubit.dart';
+import 'package:e_commerce_school_project/features/products/presentation/blocs/wish_list_cubit/wish_list_cubit.dart';
 import 'package:e_commerce_school_project/features/products/presentation/blocs/get_products_cubit/cubit/get_products_cubit.dart';
 import 'package:e_commerce_school_project/features/products/presentation/screens/cart_page.dart';
 import 'package:e_commerce_school_project/features/products/presentation/screens/wish_list_page.dart';
-import 'package:e_commerce_school_project/features/products/presentation/widgets/product_cart_widget.dart';
+import 'package:e_commerce_school_project/features/products/presentation/widgets/product_card_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -33,7 +34,8 @@ class ProductsPage extends StatelessWidget {
     print("get products");
     Account account = BlocProvider.of<AuthCubit>(context).account!;
     BlocProvider.of<GetProductsCubit>(context).getProducts(account: account);
-
+    BlocProvider.of<CartCubit>(context).addToCart(account: account);
+    BlocProvider.of<CartCubit>(context).getCartList(account: account);
     return SafeArea(
       child: Scaffold(
         backgroundColor: theme.colorScheme.primary,
@@ -74,6 +76,7 @@ class ProductsPage extends StatelessWidget {
                                                     370
                                                 ? 2
                                                 : 1,
+                                        mainAxisSpacing: 30.h,
                                       ),
                                       itemCount:
                                           getProductsState.products.length,
@@ -93,7 +96,7 @@ class ProductsPage extends StatelessWidget {
                                                 top: index == 0 || index == 1
                                                     ? 10.h
                                                     : 0),
-                                            child: ProductCart(
+                                            child: ProductCard(
                                                 product: getProductsState
                                                     .products[index]),
                                           ),
@@ -148,7 +151,7 @@ class ProductsPage extends StatelessWidget {
                             icon: Icons.home_rounded,
                           ),
                           const GButton(
-                            icon: Icons.shopping_cart_rounded,
+                            icon: Icons.shopping_bag_rounded,
                           ),
                           const GButton(
                             icon: Icons.favorite_rounded,
