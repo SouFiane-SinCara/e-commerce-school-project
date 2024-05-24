@@ -136,3 +136,9 @@ class  DeleteCheckoutServerFailure extends DeleteCheckoutFailure {
   @override
   List<Object?> get props => [];
 }
+abstract class UploadCheckoutsFailure extends Failures {}
+
+class  UploadCheckoutsServerFailure extends UploadCheckoutsFailure {
+  @override
+  List<Object?> get props => [];
+}

@@ -61,9 +61,6 @@ class ProductsPage extends StatelessWidget {
                                     .addInitialWishListFromGotProducts(
                                         products: wishList);
                                 return GestureDetector(
-                                  onLongPress: () {
-                                    Hive.box("account").clear();
-                                  },
                                   child: SizedBox(
                                     width: double.infinity,
                                     height: double.infinity,

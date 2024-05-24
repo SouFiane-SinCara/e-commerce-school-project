@@ -14,6 +14,7 @@ class ProductModel extends Product {
     required super.isFavorite,
   });
   factory ProductModel.fromJson(Map<String, dynamic> json) {
+    print(json['title']);
     return ProductModel(
       id: json['id'],
       colors: List<String>.from(json['colors']),

@@ -81,4 +81,15 @@ class ProductRepositoryImp extends ProductRepository {
       return Left(DeleteCheckoutServerFailure());
     }
   }
+
+  @override
+  Future<Either<UploadCheckoutsFailure, Unit>> uploadCheckouts(
+      {required List<Checkout> checkouts}) async {
+    try {
+      await productsRemoteDataSource.uploadCheckouts(checkouts: checkouts);
+      return const Right(unit);
+    } on ServerException {
+      return Left(UploadCheckoutsServerFailure());
+    }
+  }
 }

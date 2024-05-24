@@ -1,7 +1,7 @@
 import 'package:e_commerce_school_project/features/products/domain/entities/checkout.dart';
 
 class CheckoutModel extends Checkout {
-    CheckoutModel(
+  CheckoutModel(
       {required super.productId,
       super.id,
       super.phoneNumber,

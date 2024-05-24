@@ -16,6 +16,7 @@ abstract class ProductsRemoteDataSource {
   Future addToCart({required Checkout checkout, required Account account});
   Future<List<Checkout>> getCartList({required Account account});
   Future deleteCheckout({required Account account, required Checkout checkout});
+  Future uploadCheckouts({required List<Checkout> checkouts});
 }
 
 class ProductsRemoteDataSourceImp extends ProductsRemoteDataSource {
@@ -141,7 +142,7 @@ class ProductsRemoteDataSourceImp extends ProductsRemoteDataSource {
 
       String documentId = docRef.id;
 
-      await docRef.update({ 
+      await docRef.update({
         'id': documentId,
       });
 
@@ -191,6 +192,43 @@ class ProductsRemoteDataSourceImp extends ProductsRemoteDataSource {
     } catch (e) {
       print(e);
       throw DeleteCheckoutServerFailure();
+    }
+  }
+
+  @override
+  Future uploadCheckouts({required List<Checkout> checkouts}) async {
+    CheckoutModel model;
+    try {
+      FirebaseFirestore fb = FirebaseFirestore.instance;
+      checkouts.forEach(
+        (element) async {
+          print(element.time);
+          model = CheckoutModel(
+              date: element.date,
+              phoneNumber: element.phoneNumber,
+              shippingAddress: element.shippingAddress,
+              time: element.time,
+              productId: element.productId,
+              title: element.title,
+              image: element.image,
+              price: element.price,
+              description: element.description,
+              size: element.size,
+              category: element.category,
+              color: element.color,
+              quantity: element.quantity,
+              fullName: element.fullName,
+              email: element.email);
+          DocumentReference docRef =
+              await fb.collection("orders").add(model.toJson());
+          String docId = docRef.id;
+          docRef.update({
+            "id": docId,
+          });
+        },
+      );
+    } catch (e) {
+      throw ServerException();
     }
   }
 }

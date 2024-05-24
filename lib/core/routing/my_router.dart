@@ -5,6 +5,7 @@ import 'package:e_commerce_school_project/features/authentication/presentation/s
 import 'package:e_commerce_school_project/features/authentication/presentation/screens/login_page.dart';
 import 'package:e_commerce_school_project/features/authentication/presentation/screens/signup_page.dart';
 import 'package:e_commerce_school_project/features/products/domain/entities/product.dart';
+import 'package:e_commerce_school_project/features/products/presentation/screens/complete_checkout.dart';
 import 'package:e_commerce_school_project/features/products/presentation/screens/details_products_page.dart';
 import 'package:e_commerce_school_project/features/products/presentation/screens/products_page.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,10 @@ class MyRouter {
           builder: (context) => DetailsProductsPage(
             product: routeSettings.arguments as Product,
           ),
+        );
+      case RoutesNames.completeCheckoutName:
+        return MaterialPageRoute(
+          builder: (context) => CompleteCheckout(),
         );
 
       default:

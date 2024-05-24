@@ -1,8 +1,12 @@
 import 'package:e_commerce_school_project/core/helper/extension.dart';
 import 'package:e_commerce_school_project/core/helper/my_sizedbox.dart';
 import 'package:e_commerce_school_project/core/helper/text_styles.dart';
+import 'package:e_commerce_school_project/core/routing/routes_name.dart';
 import 'package:e_commerce_school_project/core/widgets/loading.dart';
+import 'package:e_commerce_school_project/features/products/domain/entities/product.dart';
 import 'package:e_commerce_school_project/features/products/presentation/blocs/cart_cubit.dart/cubit/cart_cubit.dart';
+import 'package:e_commerce_school_project/features/products/presentation/blocs/get_products_cubit/cubit/get_products_cubit.dart';
+import 'package:e_commerce_school_project/features/products/presentation/screens/complete_checkout.dart';
 import 'package:e_commerce_school_project/features/products/presentation/widgets/cart_card_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -76,15 +80,14 @@ class CartPage extends StatelessWidget {
                                             .copyWith(fontSize: 13.sp),
                                       ),
                                       heightSize(5.h),
-                                      FittedBox(
-                                        child: Container(
-                                          width: 150.w,
-                                          height: 40.h,
-                                          alignment: Alignment.centerLeft,
+                                      Container(
+                                        width: 150.w,
+                                        height: 40.h,
+                                        child: FittedBox(
                                           child: Text(
                                             "\$" + (tot).toStringAsFixed(2),
                                             style: TextStyles.blackW900(context)
-                                                .copyWith(fontSize: 30.sp),
+                                                .copyWith(),
                                             maxLines: 1,
                                           ),
                                         ),
@@ -93,7 +96,8 @@ class CartPage extends StatelessWidget {
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      
+                                      Navigator.pushNamed(context,
+                                          RoutesNames.completeCheckoutName);
                                     },
                                     child: Container(
                                       width: 180.w,
@@ -127,8 +131,26 @@ class CartPage extends StatelessWidget {
                             ],
                           ),
                         )
-                      : CartCard(
-                          checkout: state.checkouts[index],
+                      : GestureDetector(
+                          onTap: () {
+                            List<Product> products =
+                                BlocProvider.of<GetProductsCubit>(context)
+                                    .products;
+                            Product? product;
+                            for (int i = 0; i < products.length; i++) {
+                              if (products[i].id ==
+                                  state.checkouts[index].productId) {
+                                product = products[i];
+                                break;
+                              }
+                            }
+                            Navigator.pushNamed(
+                                context, RoutesNames.detailsProductPageName,
+                                arguments: product);
+                          },
+                          child: CartCard(
+                            checkout: state.checkouts[index],
+                          ),
                         );
                 }
               },

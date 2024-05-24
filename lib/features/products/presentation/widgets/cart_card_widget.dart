@@ -55,12 +55,15 @@ class CartCard extends StatelessWidget {
                 children: [
                   Container(
                       width: 150.w,
-                      child: Text(
-                        checkout.title,
-                        style: TextStyles.blackW900(context)
-                            .copyWith(fontSize: 18.sp),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
+                      height: 50.h,
+                       child: FittedBox(
+                        child: Text(
+                          checkout.title,
+                          style: TextStyles.blackW900(context)
+                              .copyWith(fontSize: 18.sp),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
                       )),
                   widthSize(10),
                   GestureDetector(
@@ -86,10 +89,16 @@ class CartCard extends StatelessWidget {
                   ? SizedBox()
                   : Row(
                       children: [
-                        Text(
-                          lang.color + " :",
-                          style: TextStyles.blackW600(context)
-                              .copyWith(fontSize: 20.sp),
+                        Container(
+                          height: 40.h,
+                          width: 40.w,
+                           child: FittedBox(
+                            child: Text(
+                              lang.color + " :",
+                              style: TextStyles.blackW600(context)
+                                  .copyWith(fontSize: 20.sp),
+                            ),
+                          ),
                         ),
                         widthSize(5),
                         Container(
@@ -107,24 +116,32 @@ class CartCard extends StatelessWidget {
                   : Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
-                          lang.size + " :",
-                          style: TextStyles.blackW600(context)
-                              .copyWith(fontSize: 20.sp),
+                        Container(
+                          height: 40.h,
+                          width: 40.w,
+                           child: FittedBox(
+                            child: Text(
+                              lang.size + " :",
+                              style: TextStyles.blackW600(context)
+                                  .copyWith(fontSize: 20.sp),
+                            ),
+                          ),
                         ),
                         widthSize(5),
                         Container(
-                          width: 30.w,
                           alignment: Alignment.center,
+                          width: 30.w,
+                          height: 30.h,
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               border: Border.all(
                                   width: 2, color: theme.colorScheme.secondary),
                               color: theme.colorScheme.primary),
-                          child: Text(
-                            checkout.size!,
-                            style: TextStyles.blackW500(context)
-                                .copyWith(fontSize: 15.sp),
+                          child: FittedBox(
+                            child: Text(
+                              checkout.size!,
+                              style: TextStyles.blackW500(context).copyWith(),
+                            ),
                           ),
                         ),
                       ],
@@ -132,10 +149,12 @@ class CartCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "\$${checkout.price.toStringAsFixed(2)}",
-                    style:
-                        TextStyles.blackW500(context).copyWith(fontSize: 15.sp),
+                  Container(
+                     child: Text(
+                      "\$${checkout.price.toStringAsFixed(2)}",
+                      style: TextStyles.blackW500(context)
+                          .copyWith(fontSize: 15.sp),
+                    ),
                   ),
                   SizedBox(
                     width: 100.w,
@@ -147,11 +166,11 @@ class CartCard extends StatelessWidget {
                       shape: BoxShape.circle,
                       color: theme.colorScheme.onBackground,
                     ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      checkout.quantity.toString(),
-                      style: TextStyles.blackW400(context)
-                          .copyWith(fontSize: 25.sp),
+                    child: FittedBox(
+                      child: Text(
+                        checkout.quantity.toString(),
+                        style: TextStyles.blackW400(context).copyWith(),
+                      ),
                     ),
                   )
                 ],

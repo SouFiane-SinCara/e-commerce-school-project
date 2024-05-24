@@ -11,12 +11,12 @@ class Checkout extends Equatable {
   final String category;
   final String? color;
   final int quantity;
-  final String? shippingAddress;
-  final String? phoneNumber;
+   String? shippingAddress;
+   String? phoneNumber;
   final String fullName;
   final String email;
-  final String? time;
-  final String? date;
+   String? time;
+   String? date;
 
    Checkout({
     this.id,

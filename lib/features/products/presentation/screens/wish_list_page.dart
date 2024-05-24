@@ -1,5 +1,6 @@
 import 'package:e_commerce_school_project/core/helper/extension.dart';
 import 'package:e_commerce_school_project/core/helper/text_styles.dart';
+import 'package:e_commerce_school_project/core/routing/routes_name.dart';
 import 'package:e_commerce_school_project/core/widgets/loading.dart';
 import 'package:e_commerce_school_project/features/products/presentation/blocs/wish_list_cubit/wish_list_cubit.dart';
 import 'package:e_commerce_school_project/features/products/presentation/widgets/product_card_widget.dart';
@@ -43,9 +44,16 @@ class WishListPage extends StatelessWidget {
               ),
               itemCount: state.wishList.length,
               itemBuilder: (BuildContext context, int index) {
-                return ProductCard(
-                  isWishList: true,
-                  product: state.wishList[index],
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(
+                        context, RoutesNames.detailsProductPageName,
+                        arguments: state.wishList[index]);
+                  },
+                child: ProductCard(
+                    isWishList: true,
+                    product: state.wishList[index],
+                  ),
                 );
               },
             );

@@ -28,7 +28,7 @@ class CartCubit extends Cubit<CartState> {
       await addToCartUseCase.call(checkout: newCheckout, account: account);
     }
   }
-
+    
   Future getCartList({required Account account}) async {
     emit(LoadingCartState());
     GetCartListUseCase getCartListUseCase = GetCartListUseCase(
@@ -52,11 +52,6 @@ class CartCubit extends Cubit<CartState> {
 
   Future deleteCheckout(
       {required Account account, required Checkout checkout}) async {
-    checkouts.forEach(
-      (element) {
-        print("before:" + element.id.toString());
-      },
-    );
     emit(LoadingCartState());
     checkouts.remove(checkout);
     DeleteCheckoutUseCase deleteCheckoutUseCase = DeleteCheckoutUseCase(
@@ -64,11 +59,6 @@ class CartCubit extends Cubit<CartState> {
           productsRemoteDataSource: ProductsRemoteDataSourceImp()),
     );
     await deleteCheckoutUseCase.call(account: account, checkout: checkout);
-    checkouts.forEach(
-      (element) {
-        print("after:" + element.id.toString());
-      },
-    );
     emit(UpdateCartState(checkouts: checkouts));
   }
 }

@@ -17,4 +17,6 @@ abstract class ProductRepository {
       {required Account account});
   Future<Either<DeleteCheckoutFailure, Unit>> deleteCheckout(
       {required Account account, required Checkout checkout});
+  Future<Either<UploadCheckoutsFailure, Unit>> uploadCheckouts(
+      {required List<Checkout> checkouts});
 }
