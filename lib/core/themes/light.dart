@@ -14,12 +14,11 @@ class LightTheme {
         onSecondary: const Color(0xFF393939),
         error: const Color.fromARGB(255, 255, 63, 63),
         onError: const Color.fromARGB(255, 255, 63, 63),
-        background: const Color(0xFF101010),
-        onBackground: const Color(0xFF101010),
+        background: Color.fromARGB(48, 221, 221, 221),
+        onBackground: Color.fromARGB(255, 207, 207, 207),
         surface: const Color(0xFF101010),
         onSurface: const Color(0xFF101010)),
     brightness: Brightness.light,
     shadowColor: Colors.black.withOpacity(0.5),
-     
   );
 }

@@ -58,7 +58,9 @@ class _LoginPageState extends State<LoginPage> {
           return lang.emailAlreadyUsedFailure;
         case const (WeakPasswordSignUpFailure):
           return lang.weakPasswordFailure;
-        case const (NonInternetConnectionFailure):
+        case const (NonInternetConnectionSignUpFailure):
+          return lang.nonInternetConnectionFailure;
+        case const (NonInternetConnectionLoginFailure):
           return lang.nonInternetConnectionFailure;
         case const (EmailBadFormatSignUpFailure):
           return lang.emailBadFormatFailure;
@@ -73,6 +75,8 @@ class _LoginPageState extends State<LoginPage> {
       }
     }
 
+    BlocProvider.of<AuthControllersCubit>(context)
+        .updateLogin(email: '', password: '');
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is LoginSuccessState) {
@@ -253,39 +257,39 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 ),
                               ),
-                              heightSize(20),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  widthSize(20),
-                                  Expanded(
-                                    child: Divider(
-                                      color: theme.colorScheme.onSecondary
-                                          .withOpacity(0.5),
-                                      height: 5.h,
-                                    ),
-                                  ),
-                                  widthSize(10),
-                                  Text(
-                                    lang.orcontinuewith,
-                                    style: TextStyles.blackW500(context),
-                                  ),
-                                  widthSize(10),
-                                  Expanded(
-                                    child: Divider(
-                                      color: theme.colorScheme.onSecondary
-                                          .withOpacity(0.5),
-                                      height: 5.h,
-                                    ),
-                                  ),
-                                  widthSize(20),
-                                ],
-                              ),
+                              heightSize(40),
+                              // Row(
+                              //   mainAxisAlignment:
+                              //       MainAxisAlignment.spaceBetween,
+                              //   children: <Widget>[
+                              //     widthSize(20),
+                              //     Expanded(
+                              //       child: Divider(
+                              //         color: theme.colorScheme.onSecondary
+                              //             .withOpacity(0.5),
+                              //         height: 5.h,
+                              //       ),
+                              //     ),
+                              //     widthSize(10),
+                              //     Text(
+                              //       lang.orcontinuewith,
+                              //       style: TextStyles.blackW500(context),
+                              //     ),
+                              //     widthSize(10),
+                              //     Expanded(
+                              //       child: Divider(
+                              //         color: theme.colorScheme.onSecondary
+                              //             .withOpacity(0.5),
+                              //         height: 5.h,
+                              //       ),
+                              //     ),
+                              //     widthSize(20),
+                              //   ],
+                              // ),
 
-                              heightSize(20),
-                              const AuthWithGoogleButton(),
-                              heightSize(20),
+                              // heightSize(20),
+                              // const AuthWithGoogleButton(),
+                              // heightSize(20),
 
                               //? -----------------------don't have an account sign up---------------------------
                               Container(

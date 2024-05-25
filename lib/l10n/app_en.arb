@@ -27,7 +27,32 @@
     "sendResetEmail":"Send Reset Email",
     "resetPasswordInformation":"Enter the email address and we'll send an email with confirmation to reset your password.",
     "serverForgotPasswordFailure":"Server error occurred during email sending",
-    "accountNotRegistered":"Account non registrato."
+    "accountNotRegistered":"Account non registrato.",
+    "items":"Items",
+    "yourWishlistIsEmpty":"Your wishlist is empty.",
+    "yourCartIsEmpty":"Your cart is empty.",
+    "thereAreNoItemsForSaleAtTheMoment":"There are no items for sale at the moment.",
+    "more":"more",
+    "less":"less",
+    "colors":"Colors",
+    "color":"Color",
+    "sizes":"Sizes",
+    "size":"Size",
+    "quantity":"Quantity",
+    "totalePrice":"Total price",
+    "addToCart":"Add to cart",
+    "checkout":"Checkout",
+    "itemAddedToCartSuccessfully": "Item added to cart successfully!",
+    "phone":"Phone",
+    "streetAddress": "Street Address",
+    "houseNumber": "House/Building Number",
+    "city": "City",
+    "province": "Province",
+    "postalCode": "Postal Code",
+    "enterYourShippingInformationBelow":"Enter your shipping information below.",
+    "shippingInformation":"Shipping Information",
+    "thankYouForYourPurchase":"Thank you for your purchase"
+
     
 
     

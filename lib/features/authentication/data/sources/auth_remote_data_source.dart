@@ -43,11 +43,13 @@ class AuthRemoteDataSourceImp extends AuthRemoteDataSource {
         FirebaseFirestore fireStore = FirebaseFirestore.instance;
         DocumentSnapshot<Map<String, dynamic>> data =
             await fireStore.collection("users").doc(user.user!.uid).get();
-
         return AccountModel.fromJson(data.data()!);
       } on FirebaseException catch (e) {
+        print("failure ex:" + e.code.toString());
         if (e.code == "invalid-email") {
           throw EmailBadFormatException();
+        } else if (e.code == "network-request-failed" || e.code == "unknown") {
+          throw NonInternetConnectionException();
         } else if (e.code == "invalid-credential") {
           throw WrongPasswordOrEmailException();
         } else {
@@ -91,9 +93,11 @@ class AuthRemoteDataSourceImp extends AuthRemoteDataSource {
           throw EmailBadFormatException();
         } else if (e.code == "weak-password") {
           throw WeakPasswordException();
+        } else if (e.code == "invalid-credential") {
+          throw WrongPasswordOrEmailException();
         } else if (e.code == "email-already-in-use") {
           throw EmailAlreadyUsedException();
-        } else if (e.code == "network-request-failed") {
+        } else if (e.code == "network-request-failed" || e.code == "unknown") {
           throw NonInternetConnectionException();
         } else {
           throw ServerException();
@@ -124,6 +128,8 @@ class AuthRemoteDataSourceImp extends AuthRemoteDataSource {
       print("errore: ${e.code}");
       if (e.code == "invalid-email") {
         throw EmailBadFormatException();
+      } else if (e.code == "network-request-failed" || e.code == "unknown") {
+        throw NonInternetConnectionException();
       } else {
         throw ServerException();
       }

@@ -37,7 +37,7 @@ class AuthWithGoogleButton extends StatelessWidget {
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(100.h),
                     topLeft: Radius.circular(100.h))),
-            child: Image.asset("lib/core/assets/images/google_logo.webp"),
+            child: Image.asset("lib/core/assets/images/google_logo.png"),
           ),
           widthSize(
             0.03,

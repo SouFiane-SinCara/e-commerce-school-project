@@ -24,11 +24,25 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  final TextEditingController emailController = TextEditingController();
+  late TextEditingController fullNameController;
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
 
-  final TextEditingController passwordController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    fullNameController = TextEditingController();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+  }
 
-  final TextEditingController fullNameController = TextEditingController();
+  @override
+  void dispose() {
+    fullNameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +65,7 @@ class _SignUpPageState extends State<SignUpPage> {
           return lang.emailAlreadyUsedFailure;
         case const (WeakPasswordSignUpFailure):
           return lang.weakPasswordFailure;
-        case const (NonInternetConnectionFailure):
+        case const (NonInternetConnectionSignUpFailure):
           return lang.nonInternetConnectionFailure;
         case const (EmailBadFormatSignUpFailure):
           return lang.emailBadFormatFailure;
@@ -65,12 +79,6 @@ class _SignUpPageState extends State<SignUpPage> {
           return lang.serverForgotPasswordFailure;
       }
     }
-
-    BlocProvider.of<AuthControllersCubit>(context).updateSignUp(
-      email: "",
-      fullName: "",
-      password: "",
-    );
 
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
@@ -129,7 +137,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                         ),
                         Container(
-                             padding: EdgeInsets.symmetric(
+                          padding: EdgeInsets.symmetric(
                             horizontal: 20.w,
                           ),
                           child: Column(
@@ -146,7 +154,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   height: 80.h,
                                   alignment: Alignment.centerLeft,
                                   child: FittedBox(
-                                   child: Text(
+                                    child: Text(
                                       '${lang!.createYour}\n${lang.account}',
                                       style: TextStyles.blackW900(context)
                                           .copyWith(fontSize: 35.sp),
@@ -167,136 +175,137 @@ class _SignUpPageState extends State<SignUpPage> {
                                     : const SizedBox(),
 
                                 heightSize(10),
-                                MyTextField(
-                                    onChanged: (value) {
-                                      BlocProvider.of<AuthControllersCubit>(
-                                              context)
-                                          .updateSignUp(fullName: value);
-                                    },
-                                    textInputAction: TextInputAction.next,
-                                    icon: const Icon(Icons.person_rounded),
-                                    controller: fullNameController,
-                                    title: lang.fullname),
-                                heightSize(20),
-                                MyTextField(
-                                    onChanged: (value) {
-                                      BlocProvider.of<AuthControllersCubit>(
-                                              context)
-                                          .updateSignUp(email: value);
-                                    },
-                                    textInputAction: TextInputAction.next,
-                                    icon: const Icon(Icons.mail_rounded),
-                                    controller: emailController,
-                                    title: lang.email),
-                                heightSize(20),
-                                MyTextField(
-                                    onChanged: (value) {
-                                      BlocProvider.of<AuthControllersCubit>(
-                                              context)
-                                          .updateSignUp(password: value);
-                                    },
-                                    textInputAction: TextInputAction.done,
-                                    icon: const Icon(Icons.lock_rounded),
-                                    controller: passwordController,
-                                    enableSuffixIcon: true,
-                                    suffixIcon:
-                                        const Icon(Icons.visibility_rounded),
-                                    obscureText: true,
-                                    secondSuffixIcon: const Icon(
-                                        Icons.visibility_off_rounded),
-                                    title: lang.password),
-                                heightSize(40),
-                                BlocBuilder<AuthControllersCubit,
-                                    AuthControllersState>(
-                                  builder: (context, authControllers) {
-                                    return GestureDetector(
-                                      onTap: () async {
-                                        String email = authControllers
-                                                is SignUpControllersUpdateState
-                                            ? authControllers.email
-                                            : "";
-                                        String password = authControllers
-                                                is SignUpControllersUpdateState
-                                            ? authControllers.password
-                                            : "";
-                                        String fullName = authControllers
-                                                is SignUpControllersUpdateState
-                                            ? authControllers.fullName
-                                            : "";
-                                        BlocProvider.of<AuthCubit>(context)
-                                            .signUp(
-                                          email,
-                                          fullName,
-                                          password,
-                                        );
-                                      },
-                                      child: AuthButtonText(
-                                        text: Text(
-                                          context.lang().signup,
-                                          style: authControllers
-                                                      is SignUpControllersUpdateState &&
-                                                  authControllers
-                                                      .email.isNotEmpty &&
-                                                  authControllers
-                                                      .password.isNotEmpty &&
-                                                  authControllers
-                                                      .email.isNotEmpty
-                                              ? TextStyles.whiteW500(context)
-                                                  .copyWith(
-                                                  fontSize: 15.sp,
-                                                )
-                                              : TextStyles.whiteW500(context)
-                                                  .copyWith(
+
+                                StatefulBuilder(
+                                  builder:
+                                      (BuildContext context, setFieldsState) {
+                                    return Column(
+                                      children: [
+                                        MyTextField(
+                                            onChanged: (value) {
+                                              setFieldsState(
+                                                () => fullNameController,
+                                              );
+                                            },
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            icon: const Icon(
+                                                Icons.person_rounded),
+                                            controller: fullNameController,
+                                            title: lang.fullname),
+                                        heightSize(20),
+                                        MyTextField(
+                                            onChanged: (value) {
+                                              setFieldsState(
+                                                () => emailController,
+                                              );
+                                            },
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            icon:
+                                                const Icon(Icons.mail_rounded),
+                                            controller: emailController,
+                                            title: lang.email),
+                                        heightSize(20),
+                                        MyTextField(
+                                            onChanged: (value) {
+                                              setFieldsState(
+                                                () => passwordController,
+                                              );
+                                            },
+                                            textInputAction:
+                                                TextInputAction.done,
+                                            icon:
+                                                const Icon(Icons.lock_rounded),
+                                            controller: passwordController,
+                                            enableSuffixIcon: true,
+                                            suffixIcon: const Icon(
+                                                Icons.visibility_rounded),
+                                            obscureText: true,
+                                            secondSuffixIcon: const Icon(
+                                                Icons.visibility_off_rounded),
+                                            title: lang.password),
+                                        heightSize(40),
+                                        GestureDetector(
+                                          onTap: () async {
+                                            BlocProvider.of<AuthCubit>(context)
+                                                .signUp(
+                                              emailController.text.trim(),
+                                              fullNameController.text.trim(),
+                                              passwordController.text,
+                                            );
+                                          },
+                                          child: AuthButtonText(
+                                            text: Text(
+                                              context.lang().signup,
+                                              style: fullNameController.text
+                                                          .trim()
+                                                          .isNotEmpty &&
+                                                      passwordController
+                                                          .text.isNotEmpty &&
+                                                      emailController.text
+                                                          .trim()
+                                                          .isNotEmpty
+                                                  ? TextStyles.whiteW500(
+                                                          context)
+                                                      .copyWith(
                                                       fontSize: 15.sp,
-                                                      color: Colors.white),
+                                                    )
+                                                  : TextStyles.whiteW500(
+                                                          context)
+                                                      .copyWith(
+                                                          fontSize: 15.sp,
+                                                          color: Colors.white),
+                                            ),
+                                            color: fullNameController.text
+                                                        .trim()
+                                                        .isNotEmpty &&
+                                                    passwordController
+                                                        .text.isNotEmpty &&
+                                                    emailController.text
+                                                        .trim()
+                                                        .isNotEmpty
+                                                ? theme.colorScheme.secondary
+                                                : theme.colorScheme.onSecondary,
+                                          ),
                                         ),
-                                        color: authControllers
-                                                    is SignUpControllersUpdateState &&
-                                                authControllers
-                                                    .email.isNotEmpty &&
-                                                authControllers
-                                                    .password.isNotEmpty &&
-                                                authControllers.email.isNotEmpty
-                                            ? theme.colorScheme.secondary
-                                            : theme.colorScheme.onSecondary,
-                                      ),
+                                      ],
                                     );
                                   },
                                 ),
+                                heightSize(40),
+                                // Row(
+                                //   mainAxisAlignment:
+                                //       MainAxisAlignment.spaceBetween,
+                                //   children: <Widget>[
+                                //     widthSize(20),
+                                //     Expanded(
+                                //       child: Divider(
+                                //         color: theme.colorScheme.onSecondary
+                                //             .withOpacity(0.5),
+                                //         height: 5.h,
+                                //       ),
+                                //     ),
+                                //     widthSize(20),
+                                //     Text(
+                                //       lang.orcontinuewith,
+                                //       style: TextStyles.blackW500(context),
+                                //     ),
+                                //     widthSize(10),
+                                //     Expanded(
+                                //       child: Divider(
+                                //         color: theme.colorScheme.onSecondary
+                                //             .withOpacity(0.5),
+                                //         height: 5.h,
+                                //       ),
+                                //     ),
+                                //     widthSize(20),
+                                //   ],
+                                // ),
 
-                                heightSize(20),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    widthSize(20),
-                                    Expanded(
-                                      child: Divider(
-                                        color: theme.colorScheme.onSecondary
-                                            .withOpacity(0.5),
-                                        height: 5.h,
-                                      ),
-                                    ),
-                                    widthSize(20),
-                                    Text(
-                                      lang.orcontinuewith,
-                                      style: TextStyles.blackW500(context),
-                                    ),
-                                    widthSize(10),
-                                    Expanded(
-                                      child: Divider(
-                                        color: theme.colorScheme.onSecondary
-                                            .withOpacity(0.5),
-                                        height: 5.h,
-                                      ),
-                                    ),
-                                    widthSize(20),
-                                  ],
-                                ),
-
-                                heightSize(20),
-                                const AuthWithGoogleButton(),
-                                heightSize(20),
+                                // heightSize(20),
+                                // const AuthWithGoogleButton(),
+                                // heightSize(20),
 
                                 //? -----------------------don't have an account sign up---------------------------
                                 Container(

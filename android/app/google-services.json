@@ -1,43 +1,26 @@
 {
   "project_info": {
-    "project_number": "637511448346",
-    "project_id": "e-commerce-school-project",
-    "storage_bucket": "e-commerce-school-project.appspot.com"
+    "project_number": "969094576773",
+    "project_id": "e-commmerce-ed90b",
+    "storage_bucket": "e-commmerce-ed90b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:637511448346:android:74da6a74119747ea4c9ea3",
+        "mobilesdk_app_id": "1:969094576773:android:102be42a8546261c22c7ec",
         "android_client_info": {
           "package_name": "com.example.e_commerece_school_project"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "637511448346-83gl4uod5a6ovfojuh0v839idvvsvgl3.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyD6Y8NNmlVzd91t8oL-ivbt6euQYt-pi7A"
+          "current_key": "AIzaSyBSGlnc8b6Qt5wbVJCTNmZkRVY5DO43Zc0"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "637511448346-83gl4uod5a6ovfojuh0v839idvvsvgl3.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "637511448346-h99ki1m24rg715feoapviuk224dds9gc.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.eCommereceSchoolProject"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

@@ -135,6 +135,21 @@ class TextStyles {
             fontWeight: FontWeight.w500);
   }
 
+  static TextStyle greyW600(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    return theme.brightness == Brightness.light
+        //light theme
+        ? TextStyle(
+            fontFamily: normalFontStyle,
+            color: theme.colorScheme.onSecondary.withOpacity(0.8),
+            fontWeight: FontWeight.w600)
+        //dark theme
+        : TextStyle(
+            fontFamily: normalFontStyle,
+            color: theme.colorScheme.secondary.withOpacity(0.8),
+            fontWeight: FontWeight.w600);
+  }
+
   static TextStyle whiteW500(BuildContext context) {
     ThemeData theme = Theme.of(context);
     return theme.brightness == Brightness.light
@@ -148,6 +163,20 @@ class TextStyles {
             fontFamily: normalFontStyle,
             color: theme.colorScheme.primary,
             fontWeight: FontWeight.w500);
+  }
+  static TextStyle whiteW900(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    return theme.brightness == Brightness.light
+        //light theme
+        ? TextStyle(
+            fontFamily: normalFontStyle,
+            color: theme.colorScheme.primary,
+            fontWeight: FontWeight.w900)
+        //dark theme
+        : TextStyle(
+            fontFamily: normalFontStyle,
+            color: theme.colorScheme.primary,
+            fontWeight: FontWeight.w900);
   }
 
   static TextStyle redW600(BuildContext context) {
