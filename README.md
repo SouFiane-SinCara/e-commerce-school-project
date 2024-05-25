@@ -16,7 +16,6 @@ Key Features:
 1. **Product Browsing**: Users can browse through a variety of products across multiple categories.
 2. **Shopping Cart**: Users can add products to their shopping cart and manage their orders.
 3. **User Authentication**: The app includes user authentication features for secure access.
-4. **Payment Integration**: The app integrates with popular payment gateways for easy checkout.
-5. **Admin Page Integration**: The app includes an integrated admin page, which was not developed by me, for managing the product catalog and orders. The admin page uses Firebase as its database.
+4. **Admin Page Integration**: The app includes an integrated admin page, which was not developed by me, for managing the product catalog and orders. The admin page uses Firebase as its database.
 
 This project serves as a great learning experience in understanding the nuances of e-commerce app development, from product listing and user management to payment processing and order fulfillment.
