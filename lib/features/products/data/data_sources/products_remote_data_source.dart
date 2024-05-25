@@ -25,7 +25,10 @@ class ProductsRemoteDataSourceImp extends ProductsRemoteDataSource {
     List<Product> products = [];
     try {
       final FirebaseFirestore fireStore = FirebaseFirestore.instance;
-      final productData = await fireStore.collection("products").get();
+      final productData = await fireStore
+          .collection("products")
+          .orderBy('createdAt', descending: false)
+          .get();
       final wishListData = await fireStore
           .collection("users")
           .doc(account.userId)

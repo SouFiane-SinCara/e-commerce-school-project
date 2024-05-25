@@ -207,15 +207,15 @@ class _CompleteCheckoutState extends State<CompleteCheckout> {
 
                           for (var element in checkouts) {
                             // ignore: prefer_interpolation_to_compose_strings
-                            element.shippingAddress = "shippingAddress: " +
+                            element.shippingAddress = " shippingAddress: " +
                                 streetAddress.text.trim() +
-                                'houseNumber: ' +
+                                ' houseNumber: ' +
                                 houseNumber.text.trim() +
-                                'city: ' +
+                                ' city: ' +
                                 city.text.trim() +
-                                'province: ' +
+                                ' province: ' +
                                 province.text.trim() +
-                                'postalCode: ' +
+                                ' postalCode: ' +
                                 postalCode.text.trim();
 
                             element.time = formattedItalyTime;
