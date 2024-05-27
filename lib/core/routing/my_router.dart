@@ -27,7 +27,7 @@ class MyRouter {
         );
       case RoutesNames.productsPageName:
         return MaterialPageRoute(
-          builder: (context) => const ProductsPage(),
+          builder: (context) =>  ProductsPage(),
         );
       case RoutesNames.detailsProductPageName:
         return MaterialPageRoute(

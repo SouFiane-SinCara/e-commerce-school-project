@@ -11,7 +11,7 @@ class MyTextField extends StatefulWidget {
   final Icon? suffixIcon;
   final Icon? secondSuffixIcon;
   final String? prefixValue;
-  final Icon icon;
+  final Icon ?icon;
   final List<TextInputFormatter>? format;
   final TextEditingController controller;
   final int? maxLength;

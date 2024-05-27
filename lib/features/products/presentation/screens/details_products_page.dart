@@ -22,17 +22,19 @@ class DetailsProductsPage extends StatelessWidget {
     void showAddToCartDialog(BuildContext context) {
       showDialog(
         context: context,
+        barrierColor: Colors.transparent,
         builder: (BuildContext context) {
           return AlertDialog(
-            backgroundColor: theme.colorScheme.primary,
+            backgroundColor: theme.colorScheme.secondary,
+            shadowColor: Colors.transparent,
             title: Text(
               context.lang().itemAddedToCartSuccessfully,
-              style: TextStyles.blackW600(context).copyWith(fontSize: 15.sp),
+              style: TextStyles.whiteW900(context).copyWith(fontSize: 15.sp),
               textAlign: TextAlign.center,
             ),
             content: Icon(
               Icons.check_circle_outline_sharp,
-              color: theme.colorScheme.secondary,
+              color: theme.colorScheme.primary,
               size: 80.sp,
             ),
             actions: [
@@ -43,7 +45,7 @@ class DetailsProductsPage extends StatelessWidget {
                 child: Text(
                   'OK',
                   style:
-                      TextStyles.blackW600(context).copyWith(fontSize: 15.sp),
+                      TextStyles.whiteW500(context).copyWith(fontSize: 15.sp),
                 ),
               ),
             ],
@@ -68,10 +70,11 @@ class DetailsProductsPage extends StatelessWidget {
               children: [
                 Container(
                   width: double.infinity,
+                  color: Colors.white,
                   height: 350.h,
                   child: Image.network(
                     product.image,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.contain,
                     loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress == null) return child;
                       return Center(
@@ -339,14 +342,17 @@ class DetailsProductsPage extends StatelessWidget {
                                                   product.sizes[index]
                                           ? theme.colorScheme.secondary
                                           : theme.colorScheme.primary),
-                                  child: Text(
-                                    product.sizes[index],
-                                    style: selectedSize != null &&
-                                            selectedSize == product.sizes[index]
-                                        ? TextStyles.whiteW500(context)
-                                            .copyWith(fontSize: 15.sp)
-                                        : TextStyles.blackW500(context)
-                                            .copyWith(fontSize: 15.sp),
+                                  child: FittedBox(
+                                    child: Text(
+                                      product.sizes[index],
+                                      style: selectedSize != null &&
+                                              selectedSize ==
+                                                  product.sizes[index]
+                                          ? TextStyles.whiteW500(context)
+                                              .copyWith(fontSize: 15.sp)
+                                          : TextStyles.blackW500(context)
+                                              .copyWith(fontSize: 15.sp),
+                                    ),
                                   ),
                                 ),
                               );
@@ -400,10 +406,12 @@ class DetailsProductsPage extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                        Text(
-                                          "$quantity",
-                                          style: TextStyles.blackW600(context)
-                                              .copyWith(fontSize: 18.sp),
+                                        FittedBox(
+                                          child: Text(
+                                            "$quantity",
+                                            style: TextStyles.blackW600(context)
+                                                .copyWith(fontSize: 18.sp),
+                                          ),
                                         ),
                                         Container(
                                           alignment: Alignment.center,
@@ -437,7 +445,7 @@ class DetailsProductsPage extends StatelessWidget {
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 10.w),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -448,85 +456,85 @@ class DetailsProductsPage extends StatelessWidget {
                                         .copyWith(fontSize: 13.sp),
                                   ),
                                   heightSize(5.h),
-                                  FittedBox(
-                                    child: Container(
-                                      width: 150.w,
-                                      height: 40.h,
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        "\$" +
-                                            (product.price * quantity)
-                                                .toStringAsFixed(2),
-                                        style: TextStyles.blackW900(context)
-                                            .copyWith(fontSize: 30.sp),
-                                        maxLines: 1,
-                                      ),
-                                    ),
+                                  Text(
+                                    "\$" +
+                                        (product.price * quantity)
+                                            .toStringAsFixed(2),
+                                    style: TextStyles.blackW900(context)
+                                        .copyWith(fontSize: 20.sp),
+                                    maxLines: 1,
                                   ),
                                 ],
                               ),
-                              StatefulBuilder(
-                                  builder: (context, setAddToCardColorState) {
-                                return GestureDetector(
-                                  onTap: () async {
-                                    String colorToHex(Color color) {
-                                      String hexColor = color.value
-                                          .toRadixString(16)
-                                          .padLeft(8, '0');
+                              Align(
+                                alignment: Alignment.bottomRight,
+                                child: StatefulBuilder(
+                                    builder: (context, setAddToCardColorState) {
+                                  return GestureDetector(
+                                    onTap: () async {
+                                      String colorToHex(Color color) {
+                                        String hexColor = color.value
+                                            .toRadixString(16)
+                                            .padLeft(8, '0');
 
-                                      return '#${hexColor.substring(0, 2)}${hexColor.substring(2, 8)}';
-                                    }
+                                        return '#${hexColor.substring(0, 2)}${hexColor.substring(2, 8)}';
+                                      }
 
-                                    Account account =
-                                        BlocProvider.of<AuthCubit>(context)
-                                            .account!;
-                                    await BlocProvider.of<CartCubit>(context)
-                                        .addToCart(
-                                            account: account,
-                                            newCheckout: Checkout(
-                                              productId: product.id,
-                                              title: product.title,
-                                              image: product.image,
-                                              price: product.price * quantity,
-                                              description: product.description,
-                                              size: selectedSize,
-                                              category: product.category,
-                                              color: selectedColor == null
-                                                  ? null
-                                                  : colorToHex(selectedColor!),
-                                              quantity: quantity,
-                                              fullName: account.fullName,
-                                              email: account.email,
-                                            ));
-                                    showAddToCartDialog(context);
-                                  },
-                                  child: Container(
-                                    width: 180.w,
-                                    height: 50.h,
-                                    decoration: BoxDecoration(
-                                        color: theme.colorScheme.secondary,
-                                        borderRadius:
-                                            BorderRadius.circular(30)),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.shopping_bag_rounded,
-                                          color: theme.colorScheme.primary,
-                                          size: 25.sp,
-                                        ),
-                                        widthSize(10),
-                                        Text(
-                                          lang.addToCart,
-                                          style: TextStyles.whiteW900(context)
-                                              .copyWith(fontSize: 15.sp),
-                                        )
-                                      ],
+                                      Account account =
+                                          BlocProvider.of<AuthCubit>(context)
+                                              .account!;
+                                      await BlocProvider.of<CartCubit>(context)
+                                          .addToCart(
+                                              account: account,
+                                              newCheckout: Checkout(
+                                                productId: product.id,
+                                                title: product.title,
+                                                image: product.image,
+                                                price: product.price * quantity,
+                                                description:
+                                                    product.description,
+                                                size: selectedSize,
+                                                category: product.category,
+                                                color: selectedColor == null
+                                                    ? null
+                                                    : colorToHex(
+                                                        selectedColor!),
+                                                quantity: quantity,
+                                                fullName: account.fullName,
+                                                email: account.email,
+                                              ));
+                                      showAddToCartDialog(context);
+                                    },
+                                    child: Container(
+                                      width: 180.w,
+                                      height: 50.h,
+                                      decoration: BoxDecoration(
+                                          color: theme.colorScheme.secondary,
+                                          borderRadius:
+                                              BorderRadius.circular(30)),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          FittedBox(
+                                            child: Icon(
+                                              Icons.shopping_bag_rounded,
+                                              color: theme.colorScheme.primary,
+                                              size: 25.sp,
+                                            ),
+                                          ),
+                                          widthSize(10),
+                                          Text(
+                                            lang.addToCart,
+                                            style: TextStyles.whiteW900(context)
+                                                .copyWith(),
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                );
-                              })
+                                  );
+                                }),
+                              )
                             ],
                           ),
                         ),
@@ -547,7 +555,7 @@ class DetailsProductsPage extends StatelessWidget {
                 },
                 icon: Icon(
                   Icons.arrow_back_ios_new,
-                  color: theme.colorScheme.secondary,
+                  color: theme.colorScheme.onSecondary,
                 )),
           ),
         ],
