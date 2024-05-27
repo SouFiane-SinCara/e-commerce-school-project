@@ -32,17 +32,20 @@ class CartCard extends StatelessWidget {
             height: 200.h,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(25),
-              child: Image.network(
-                checkout.image,
-                fit: BoxFit.cover,
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return Center(
-                    child: CircularProgressIndicator(
-                      color: theme.colorScheme.secondary,
-                    ),
-                  );
-                },
+              child: Container(
+                color: Colors.white,
+                child: Image.network(
+                  checkout.image,
+                  fit: BoxFit.contain,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: theme.colorScheme.secondary,
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ),
@@ -56,7 +59,7 @@ class CartCard extends StatelessWidget {
                   Container(
                       width: 150.w,
                       height: 50.h,
-                       child: FittedBox(
+                      child: FittedBox(
                         child: Text(
                           checkout.title,
                           style: TextStyles.blackW900(context)
@@ -92,7 +95,7 @@ class CartCard extends StatelessWidget {
                         Container(
                           height: 40.h,
                           width: 40.w,
-                           child: FittedBox(
+                          child: FittedBox(
                             child: Text(
                               lang.color + " :",
                               style: TextStyles.blackW600(context)
@@ -119,7 +122,7 @@ class CartCard extends StatelessWidget {
                         Container(
                           height: 40.h,
                           width: 40.w,
-                           child: FittedBox(
+                          child: FittedBox(
                             child: Text(
                               lang.size + " :",
                               style: TextStyles.blackW600(context)
@@ -150,7 +153,7 @@ class CartCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                     child: Text(
+                    child: Text(
                       "\$${checkout.price.toStringAsFixed(2)}",
                       style: TextStyles.blackW500(context)
                           .copyWith(fontSize: 15.sp),

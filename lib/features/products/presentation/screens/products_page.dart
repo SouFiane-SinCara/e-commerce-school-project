@@ -1,12 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_school_project/core/helper/extension.dart';
-import 'package:e_commerce_school_project/core/helper/my_sizedbox.dart';
 import 'package:e_commerce_school_project/core/helper/text_styles.dart';
 import 'package:e_commerce_school_project/core/routing/routes_name.dart';
 import 'package:e_commerce_school_project/core/widgets/loading.dart';
+import 'package:e_commerce_school_project/core/widgets/my_text_field.dart';
 import 'package:e_commerce_school_project/features/authentication/domain/entities/account.dart';
 import 'package:e_commerce_school_project/features/authentication/presentation/logic/Auth_cubit/Auth_cubit.dart';
-import 'package:e_commerce_school_project/features/products/data/data_sources/products_remote_data_source.dart';
 import 'package:e_commerce_school_project/features/products/domain/entities/product.dart';
 import 'package:e_commerce_school_project/features/products/presentation/blocs/cart_cubit.dart/cubit/cart_cubit.dart';
 import 'package:e_commerce_school_project/features/products/presentation/blocs/wish_list_cubit/wish_list_cubit.dart';
@@ -17,21 +15,59 @@ import 'package:e_commerce_school_project/features/products/presentation/widgets
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:path/path.dart';
 
-class ProductsPage extends StatelessWidget {
-  const ProductsPage({super.key});
+class ProductsPage extends StatefulWidget {
+  ProductsPage({super.key});
+
+  @override
+  State<ProductsPage> createState() => _ProductsPageState();
+}
+
+class _ProductsPageState extends State<ProductsPage>
+    with AutomaticKeepAliveClientMixin {
+  bool showTextField = false;
+  late TextEditingController searchController;
+  List<Product> filteredProducts = [];
+  List<Product> allProducts = [];
+
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+    searchController = TextEditingController();
+    searchController.addListener(_onSearchChanged);
+    _fetchData(context);
+  }
+
+  void _fetchData(BuildContext context) {
+    Account account = BlocProvider.of<AuthCubit>(context).account!;
+    BlocProvider.of<GetProductsCubit>(context).getProducts(account: account);
+    BlocProvider.of<CartCubit>(context).addToCart(account: account);
+    BlocProvider.of<CartCubit>(context).getCartList(account: account);
+  }
+
+  void _onSearchChanged() {
+    setState(() {
+      filteredProducts = allProducts
+          .where((product) => product.title
+              .toLowerCase()
+              .contains(searchController.text.toLowerCase()))
+          .toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    super.build(
+        context); // Need to call super.build when using AutomaticKeepAliveClientMixin
     ThemeData theme = context.themes();
+
     Future<bool> showLogoutDialog(BuildContext context, String language) {
       String title, content, noButtonText, yesButtonText;
       if (language == 'en') {
@@ -45,7 +81,7 @@ class ProductsPage extends StatelessWidget {
         noButtonText = 'No';
         yesButtonText = 'Sì';
       }
-
+      print('rebuild');
       return showDialog<bool>(
         barrierColor: Colors.transparent,
         context: context,
@@ -92,9 +128,8 @@ class ProductsPage extends StatelessWidget {
                         ),
                         onPressed: () async {
                           Navigator.pop(context);
-                          Hive.box("account").clear();
+                          await Hive.box("account").clear();
                           await FirebaseAuth.instance.signOut();
-
                           Navigator.pushReplacementNamed(
                               context, RoutesNames.loginPageName);
                         },
@@ -110,17 +145,12 @@ class ProductsPage extends StatelessWidget {
     }
 
     int indexPage = 0;
-    print("get products");
-    Account account = BlocProvider.of<AuthCubit>(context).account!;
-    BlocProvider.of<GetProductsCubit>(context).getProducts(account: account);
-    BlocProvider.of<CartCubit>(context).addToCart(account: account);
-    BlocProvider.of<CartCubit>(context).getCartList(account: account);
+
     return SafeArea(
       child: RefreshIndicator(
         onRefresh: () async {
           await Future.delayed(Duration(seconds: 1));
-          BlocProvider.of<GetProductsCubit>(context)
-              .getProducts(account: account);
+          _fetchData(context);
         },
         backgroundColor: theme.colorScheme.secondary,
         color: theme.colorScheme.primary,
@@ -138,9 +168,23 @@ class ProductsPage extends StatelessWidget {
                               builder: (context, getProductsState) {
                                 if (getProductsState
                                     is GetProductsSuccessState) {
-                                  List<Product> wishList = [];
+                                  List<Product> products =
+                                      getProductsState.products;
 
-                                  getProductsState.products.forEach((element) {
+                                  // Store all products for searching
+                                  allProducts = products;
+
+                                  // If search field is empty, show all products
+                                  if (searchController.text.isEmpty) {
+                                    filteredProducts = allProducts;
+                                  }
+
+                                  // Sort products by createdAt
+                                  products.sort((a, b) =>
+                                      b.createdAt.compareTo(a.createdAt));
+
+                                  List<Product> wishList = [];
+                                  products.forEach((element) {
                                     if (element.isFavorite == true) {
                                       wishList.add(element);
                                     }
@@ -148,53 +192,52 @@ class ProductsPage extends StatelessWidget {
                                   BlocProvider.of<WishListCubit>(context)
                                       .addInitialWishListFromGotProducts(
                                           products: wishList);
-                                  return GestureDetector(
-                                    child: SizedBox(
-                                      width: double.infinity,
-                                      height: double.infinity,
-                                      child: GridView.builder(
-                                        gridDelegate:
-                                            SliverGridDelegateWithFixedCrossAxisCount(
-                                          childAspectRatio: 9 / 11,
-                                          crossAxisCount: MediaQuery.of(context)
-                                                      .size
-                                                      .width >
-                                                  370
-                                              ? 2
-                                              : 1,
-                                          mainAxisSpacing: 30.h,
+                                  return Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10.w),
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    child: ListView(
+                                      children: [
+                                        SizedBox(height: 60.h),
+                                        GridView.builder(
+                                          shrinkWrap: true,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          gridDelegate:
+                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                            childAspectRatio: 9 / 11,
+                                            crossAxisCount:
+                                                MediaQuery.of(context)
+                                                            .size
+                                                            .width >
+                                                        370
+                                                    ? 2
+                                                    : 1,
+                                            mainAxisSpacing: 30.h,
+                                            crossAxisSpacing: 20.w,
+                                          ),
+                                          itemCount: filteredProducts.length,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return GestureDetector(
+                                              onTap: () {
+                                                Navigator.pushNamed(
+                                                    context,
+                                                    RoutesNames
+                                                        .detailsProductPageName,
+                                                    arguments: filteredProducts[
+                                                        index]);
+                                              },
+                                              child: Container(
+                                                child: ProductCard(
+                                                    product: filteredProducts[
+                                                        index]),
+                                              ),
+                                            );
+                                          },
                                         ),
-                                        itemCount:
-                                            getProductsState.products.length +
-                                                1,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          if (index ==
-                                              getProductsState
-                                                  .products.length) {
-                                            return SizedBox(height: 80.h);
-                                          }
-                                          return GestureDetector(
-                                            onTap: () {
-                                              Navigator.pushNamed(
-                                                  context,
-                                                  RoutesNames
-                                                      .detailsProductPageName,
-                                                  arguments: getProductsState
-                                                      .products[index]);
-                                            },
-                                            child: Container(
-                                              margin: EdgeInsets.only(
-                                                  top: index == 0 || index == 1
-                                                      ? 10.h
-                                                      : 0),
-                                              child: ProductCard(
-                                                  product: getProductsState
-                                                      .products[index]),
-                                            ),
-                                          );
-                                        },
-                                      ),
+                                      ],
                                     ),
                                   );
                                 } else if (getProductsState
@@ -221,9 +264,7 @@ class ProductsPage extends StatelessWidget {
                         child: GNav(
                           onTabChange: (value) {
                             print(value);
-                            setNavState(
-                              () => indexPage = value,
-                            );
+                            setNavState(() => indexPage = value);
                             indexPage == 3
                                 ? showLogoutDialog(
                                     context, context.lang().localeName)
@@ -244,23 +285,83 @@ class ProductsPage extends StatelessWidget {
                           duration: const Duration(milliseconds: 500),
                           tabBorderRadius: 15,
                           iconSize: ScreenUtil().setSp(25),
-                          tabs: [
-                            const GButton(
+                          tabs: const [
+                            GButton(
                               icon: Icons.home_rounded,
                             ),
-                            const GButton(
+                            GButton(
                               icon: Icons.shopping_bag_rounded,
                             ),
-                            const GButton(
+                            GButton(
                               icon: Icons.favorite_rounded,
                             ),
-                            const GButton(
+                            GButton(
                               icon: Icons.logout_outlined,
                             ),
                           ],
                         ),
                       ),
                     ),
+                  ),
+                  StatefulBuilder(
+                    builder: (BuildContext context, setState) {
+                      return indexPage != 0
+                          ? SizedBox()
+                          : Stack(
+                              children: [
+                                Positioned(
+                                  top: 10.h,
+                                  right: showTextField ? 10.w : null,
+                                  left: showTextField ? null : 10.w,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      if (showTextField == true) {
+                                        searchController.clear();
+                                      }
+                                      setState(() {
+                                        showTextField = !showTextField;
+                                      });
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        color: theme.colorScheme.secondary,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      padding: EdgeInsets.all(5.sp),
+                                      child: Icon(
+                                        showTextField
+                                            ? Icons.cancel_outlined
+                                            : Icons.search,
+                                        color: theme.colorScheme.primary,
+                                        size: 25.sp,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                if (showTextField)
+                                  Positioned(
+                                    top: 10.h,
+                                    left: 10.w,
+                                    child: Container(
+                                      height: 40.h,
+                                      width: 300.w,
+                                      child: MyTextField(
+                                        onChanged: (p0) {
+                                          // Call the search change listener
+                                          _onSearchChanged();
+                                        },
+                                        textInputAction: TextInputAction.search,
+                                        icon: null,
+                                        controller: searchController,
+                                        title:
+                                            ' ' + context.lang().orcontinuewith,
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            );
+                    },
                   ),
                 ],
               );

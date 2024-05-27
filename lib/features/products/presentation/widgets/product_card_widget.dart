@@ -24,10 +24,6 @@ class ProductCard extends StatelessWidget {
         color: theme.colorScheme.background,
         borderRadius: BorderRadius.circular(30),
       ),
-      margin: EdgeInsets.symmetric(
-        horizontal: 10.w,
-        vertical: 4.h,
-      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -47,17 +43,20 @@ class ProductCard extends StatelessWidget {
                     bottom: 0,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(25),
-                      child: Image.network(
-                        product.image,
-                        fit: BoxFit.cover,
-                        loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) return child;
-                          return Center(
-                            child: CircularProgressIndicator(
-                              color: theme.colorScheme.secondary,
-                            ),
-                          );
-                        },
+                      child: Container(
+                        color: Colors.white,
+                        child: Image.network(
+                          product.image,
+                          fit: BoxFit.contain,
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return Center(
+                              child: CircularProgressIndicator(
+                                color: theme.colorScheme.secondary,
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),

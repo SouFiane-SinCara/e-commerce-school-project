@@ -42,7 +42,7 @@ class AuthRemoteDataSourceImp extends AuthRemoteDataSource {
             .whenComplete(() => null);
         FirebaseFirestore fireStore = FirebaseFirestore.instance;
         DocumentSnapshot<Map<String, dynamic>> data =
-            await fireStore.collection("users").doc(user.user!.uid).get();
+            await fireStore.collection("users").doc(user  .user!.uid).get();
         return AccountModel.fromJson(data.data()!);
       } on FirebaseException catch (e) {
         print("failure ex:" + e.code.toString());

@@ -10,11 +10,13 @@ class Product extends Equatable {
   final int stock;
   final String category;
   final List<String> colors;
+  final int createdAt ;
   bool ? isFavorite; // default false
 
   Product({
     required this.id,
     required this.colors,
+    required this.createdAt,
     required this.sizes,
     required this.title,
     required this.image,
@@ -29,6 +31,7 @@ class Product extends Equatable {
         title,
         id,
         image,
+        createdAt,
         sizes,
         price,
         colors,
