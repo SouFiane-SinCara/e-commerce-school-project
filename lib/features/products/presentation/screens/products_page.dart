@@ -5,6 +5,7 @@ import 'package:e_commerce_school_project/core/widgets/loading.dart';
 import 'package:e_commerce_school_project/core/widgets/my_text_field.dart';
 import 'package:e_commerce_school_project/features/authentication/domain/entities/account.dart';
 import 'package:e_commerce_school_project/features/authentication/presentation/logic/Auth_cubit/Auth_cubit.dart';
+import 'package:e_commerce_school_project/features/multi_language/presentation/widgets/multi_language_changer.dart';
 import 'package:e_commerce_school_project/features/products/domain/entities/product.dart';
 import 'package:e_commerce_school_project/features/products/presentation/blocs/cart_cubit.dart/cubit/cart_cubit.dart';
 import 'package:e_commerce_school_project/features/products/presentation/blocs/wish_list_cubit/wish_list_cubit.dart';
@@ -309,6 +310,11 @@ class _ProductsPageState extends State<ProductsPage>
                           ? SizedBox()
                           : Stack(
                               children: [
+                                if (!showTextField)
+                                  Positioned(
+                                      top: 0,
+                                      right: 0,
+                                      child: MultiLanguageChanger()),
                                 Positioned(
                                   top: 10.h,
                                   right: showTextField ? 10.w : null,
@@ -348,14 +354,16 @@ class _ProductsPageState extends State<ProductsPage>
                                       width: 300.w,
                                       child: MyTextField(
                                         onChanged: (p0) {
-                                          // Call the search change listener
                                           _onSearchChanged();
                                         },
                                         textInputAction: TextInputAction.search,
                                         icon: null,
                                         controller: searchController,
-                                        title:
-                                            ' ' + context.lang().orcontinuewith,
+                                        title: ' ' +
+                                            context
+                                                .lang()
+                                                .findWhatYouAreLookingFor +
+                                            '...',
                                       ),
                                     ),
                                   ),

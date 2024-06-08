@@ -44,7 +44,9 @@
     "city": "Città",
     "province": "Provincia",
     "postalCode": "Codice postale (CAP)",
-   "enterYourShippingInformationBelow":"Inserisci le tue informazioni di spedizione di seguito.",
-   "shippingInformation":"Informazioni di Spedizione",
-    "thankYouForYourPurchase":"Grazie per il tuo acquisto"
+    "enterYourShippingInformationBelow":"Inserisci le tue informazioni di spedizione di seguito.",
+    "shippingInformation":"Informazioni di Spedizione",
+    "thankYouForYourPurchase":"Grazie per il tuo acquisto",
+    "findWhatYouAreLookingFor":"Trova ciò che stai cercando"
+
 }

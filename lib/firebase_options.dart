@@ -41,49 +41,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-      apiKey: "AIzaSyChaMqDXm0Ocg2NJnwG186ncHwMTnagtAw",
-      authDomain: "e-commmerce-ed90b.firebaseapp.com",
-      projectId: "e-commmerce-ed90b",
-      storageBucket: "e-commmerce-ed90b.appspot.com",
-      messagingSenderId: "969094576773",
-      appId: "1:969094576773:web:ad21fcbab470ec7d22c7ec");
+    apiKey: 'AIzaSyChaMqDXm0Ocg2NJnwG186ncHwMTnagtAw',
+    appId: '1:969094576773:web:35795115f7969d4322c7ec',
+    messagingSenderId: '969094576773',
+    projectId: 'e-commmerce-ed90b',
+    authDomain: 'e-commmerce-ed90b.firebaseapp.com',
+    storageBucket: 'e-commmerce-ed90b.appspot.com',
+  );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD6Y8NNmlVzd91t8oL-ivbt6euQYt-pi7A',
-    appId: '1:637511448346:android:74da6a74119747ea4c9ea3',
-    messagingSenderId: '637511448346',
-    projectId: 'e-commerce-school-project',
-    storageBucket: 'e-commerce-school-project.appspot.com',
+    apiKey: 'AIzaSyBSGlnc8b6Qt5wbVJCTNmZkRVY5DO43Zc0',
+    appId: '1:969094576773:android:102be42a8546261c22c7ec',
+    messagingSenderId: '969094576773',
+    projectId: 'e-commmerce-ed90b',
+    storageBucket: 'e-commmerce-ed90b.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAL6tBUl9V3QZtGD5BUoyW33fpen5lN_ts',
-    appId: '1:637511448346:ios:9628ae3efd609e4d4c9ea3',
-    messagingSenderId: '637511448346',
-    projectId: 'e-commerce-school-project',
-    storageBucket: 'e-commerce-school-project.appspot.com',
-    iosClientId:
-        '637511448346-h99ki1m24rg715feoapviuk224dds9gc.apps.googleusercontent.com',
+    apiKey: 'AIzaSyDhC55zNCxnLebaIYj-URvg3Spf4BnvRHo',
+    appId: '1:969094576773:ios:6a71e2f547b26f8222c7ec',
+    messagingSenderId: '969094576773',
+    projectId: 'e-commmerce-ed90b',
+    storageBucket: 'e-commmerce-ed90b.appspot.com',
     iosBundleId: 'com.example.eCommereceSchoolProject',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAL6tBUl9V3QZtGD5BUoyW33fpen5lN_ts',
-    appId: '1:637511448346:ios:9628ae3efd609e4d4c9ea3',
-    messagingSenderId: '637511448346',
-    projectId: 'e-commerce-school-project',
-    storageBucket: 'e-commerce-school-project.appspot.com',
-    iosClientId:
-        '637511448346-h99ki1m24rg715feoapviuk224dds9gc.apps.googleusercontent.com',
+    apiKey: 'AIzaSyDhC55zNCxnLebaIYj-URvg3Spf4BnvRHo',
+    appId: '1:969094576773:ios:6a71e2f547b26f8222c7ec',
+    messagingSenderId: '969094576773',
+    projectId: 'e-commmerce-ed90b',
+    storageBucket: 'e-commmerce-ed90b.appspot.com',
     iosBundleId: 'com.example.eCommereceSchoolProject',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyAM8f7UfWGwEAphnMgvwHq4Dpx3oLS0k3g',
-    appId: '1:637511448346:web:01e43649919925a84c9ea3',
-    messagingSenderId: '637511448346',
-    projectId: 'e-commerce-school-project',
-    authDomain: 'e-commerce-school-project.firebaseapp.com',
-    storageBucket: 'e-commerce-school-project.appspot.com',
+    apiKey: 'AIzaSyChaMqDXm0Ocg2NJnwG186ncHwMTnagtAw',
+    appId: '1:969094576773:web:35795115f7969d4322c7ec',
+    messagingSenderId: '969094576773',
+    projectId: 'e-commmerce-ed90b',
+    authDomain: 'e-commmerce-ed90b.firebaseapp.com',
+    storageBucket: 'e-commmerce-ed90b.appspot.com',
   );
+
 }
